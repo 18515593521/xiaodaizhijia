@@ -30,12 +30,12 @@
 <body class="code code4">
     <div class="download">
         <p class="tip">苹果用户为保证正常使用,建议先卸载老版本</p>
-        <p class="down">
-        	<a href="javascript:;">Android下载</a>
+        <p class="down" id="android">
+        	<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.yx.jiang.CreditBill">Android下载</a>
         </p>
 
-        <p class="down down5">
-            <a href="javascript:;">ios下载</a>
+        <p class="down down5" id="ios">
+            <a href="https://www.51jishiyv.com/super/active/html/instructions.html">ios下载</a>
             <!-- <a href="./instructions.html">ios下载</a> -->
         </p>
     </div>
@@ -46,5 +46,31 @@
 
 
 </body>
+
+<script src="../../h5/js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+
+    function isAndroid_ios() {
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        return isAndroid == true ? true : false;
+    }
+
+    $(function(){
+        if(isAndroid_ios()){
+
+            $("#ios").hide();
+
+        }else{
+            $("#android").hide();
+
+
+        }
+    });
+
+
+</script>
 
 </html>

@@ -47,11 +47,11 @@
 			<input type="text" id="pwd" placeholder="请输入密码">
 		</div>
 		<div class="other">
-				<p class="agreement">申请即代表同意
+				<p class="agreement" style="font-size: 16px">申请即代表同意
 						<a href="/h5/protocol.html">《服务与隐私协议》</a>
 					</p>
 					<div class="btn" id="apply" onclick="register()">注册领红包</div>
-					<!-- <p class="already">已有账号<a href="./code4.html" class="goDown">立即下载</a></p> -->
+					<p class="already" style="font-size: 16px;">已有账号<a href="./code4.html" class="goDown" style="color: red">立即下载</a></p>
 		</div>
 	</div>
 	
@@ -85,6 +85,7 @@
 			layer.msg("请输入正确手机号",{time:1500});
 			return;
 		}
+		layer.msg("发送请求成功");
 		$.ajax({
 			type: 'POST',
 			url: "/supermarket/app/message/sendMessageNoEncryption",
@@ -97,7 +98,8 @@
 				if(!data||data.code==-1){
 					layer.msg("网络错误"+data.code);
 				}else{
-					yaler.msg("发送成功");
+					layer.msg("发送成功");
+					
 				}
 			}
 		});
@@ -119,6 +121,11 @@
 			layer.msg("请输入密码",{time:1500});
 			return;
 		}
+
+
+
+
+
 		$.ajax({
 			type: 'POST',
 			url: "/supermarket/app/login/registerNoEncryption",
@@ -138,6 +145,15 @@
 					layer.msg("该手机号已经注册过了");
 				}else{
 					layer.msg("注册成功");
+                    if(isAndroid_ios()){
+
+                        window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.yx.jiang.CreditBill";
+
+                    }else{
+
+                        window.location.href="https://www.51jishiyv.com/super/active/html/instructions.html";
+
+                    }
 				}
 			}
 		});
@@ -152,6 +168,20 @@
 			return true;
 		}
 	}
+
+
+    function isAndroid_ios() {
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        return isAndroid == true ? true : false;
+    }
+
+
+
+
+
+
 </script>
 
 </html>
