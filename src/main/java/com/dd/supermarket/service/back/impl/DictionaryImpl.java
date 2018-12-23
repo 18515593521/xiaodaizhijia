@@ -44,7 +44,7 @@ public class DictionaryImpl implements IDictionary {
 		List<Map<String,Object>> dictionList = new ArrayList<Map<String,Object>>();
 		Map<String,Object> diction = (Map<String, Object>) dd.find_dictionByType(dic_type);
 		dictionList.add(diction);
-		dictionList.addAll((Collection<? extends Map<String, Object>>) dd.find_dictionByParentID((String)diction.get("dic_id")));
+		//dictionList.addAll((Collection<? extends Map<String, Object>>) dd.find_dictionByParentID((String)diction.get("dic_id")));
 		return dictionList;
 	}
 
