@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="Author" content="Amee" />
+	<meta name="Keywords" content="" />
+	<meta name="Description" content="" />
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="./css/market.css">
+	<script type="text/javascript">
+		! function (t) {
+			var e = 750,
+				i = t.document,
+				n = i.documentElement,
+				o = "orientationchange" in t ? "orientationchange" : "resize",
+				a = function t() {
+					var i = n.getBoundingClientRect().width;
+					return n.style.fontSize = 5 * Math.max(Math.min(i / e * 20, 11.2), 8.55) + "px", t
+				}();
+			n.setAttribute("data-dpr", t.navigator.appVersion.match(/iphone/gi) ? t.devicePixelRatio : 1), /iP(hone|od|ad)/.test(
+				t.navigator.userAgent) && (i.documentElement.classList.add("ios"), parseInt(t.navigator.appVersion.match(
+				/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8 && i.documentElement.classList.add("hairline")), i.addEventListener && (t.addEventListener(
+				o, a, !1), i.addEventListener("DOMContentLoaded", a, !1))
+		}(window);
+	</script>
+	<title>商家详情</title>
+</head>
+
+<body class="details">
+	<input type="hidden" id="website_url" value="">
+	<div class="markets">
+		<div class="item">
+			<div class="logo">
+				<img src="" id="logo">
+			</div>
+			<div class="cont">
+				<div class="tit">
+					<p class="name" id="appName"></p>
+					<p class="forte">最快放款
+						<span class="color_money" id="fksj"></span>
+					</p>
+				</div>
+
+				<div class="sth">
+					<p class="" id="fkcgl"> 成功率：</p>
+					<p class="number">
+						<span class="color_money" id="sqcgrs"></span>人成功申请</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="top">
+			<div class="block">
+				<p>借款金额</p>
+				<p>每
+					<span>1000</span>
+				</p>
+			</div>
+			<div class="vertical"></div>
+
+			<div class="block">
+				<p>每日利息（元）</p>
+				<p>
+					<span id="mrlx"></span>
+				</p>
+			</div>
+		</div>
+		<div class="down">
+			<p> 贷款范围：
+				<span id="fkje"></span>
+			</p>
+			<p>日利率：
+				<span id="rll"></span>
+			</p>
+			<p>期限范围：
+				<span id="qxfw"></span>
+			</p>
+			<p>还款方式：
+				<span id="hkfs"></span>
+			</p>
+		</div>
+
+	</div>
+	<div class="info">
+		<div class="infos">
+			<p class="tit">申请条件</p>
+			<p id="sqtj"></p>
+		</div>
+		<div class="infos">
+			<p class="tit">所需材料</p>
+			<p id="sxcl"></p>
+		</div>
+		<div class="infos">
+			<p class="tit">授权方式</p>
+			<p id="sqfs"></p>
+		</div>
+		<div class="infos">
+			<p class="tit">审核方式</p>
+			<p id="shfs"></p>
+		</div>
+		<div class="infos">
+			<p class="tit">还款说明</p>
+			<p id="hksm"></p>
+		</div>
+		<!--<div class="infos">
+			<p class="tit">授权方式</p>
+			<p>身份证、通讯录</p>
+		</div>
+		<div class="infos">
+			<p class="tit">授权方式</p>
+			<p>身份证、通讯录</p>
+		</div>
+		<div class="infos">
+			<p class="tit">授权方式</p>
+			<p>身份证、通讯录</p>
+		</div>
+		-->
+	</div>
+	<a class="btn btns" lang="" id="cplj">
+		立即申请
+	</a>
+	<div class="wrap">
+		<div class="input">
+		<input type="hidden" value="" id="comid">
+			<div class="row user">
+				<input type="text" id="user" placeholder="请输入姓名" >
+			</div>
+			<div class="row tel">
+				<input type="tel" id="phone" placeholder="请输入手机号">
+			</div>
+			<div class="row id">
+				<input type="text" id="idNum" placeholder="请输入身份证号" >
+			</div>
+			<p class="tips">注册视为同意
+				<a href="#">《借款人注册协议》</a>
+			</p>
+
+
+		</div>
+		<div class="btn" id="submit">
+			申请
+		</div>
+	</div>
+	<script src="../js/jquery-1.10.2.min.js"></script>
+	<script src="/supermarket/lib/jquery.cookie.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			var appId = localStorage.getItem("appId", appId);
+			var urlStr = window.location.search;
+			searchURL = urlStr.substring(1, urlStr.length);
+			var appId = searchURL.split("=")[1];
+			$("#comid").val(appId);
+			$("#cplj").attr("lang",appId);
+			$.ajax({
+				url: "/supermarket/h5/home/find_commodityDetails",
+				type:"POST",
+                dataType:"json",
+				data: {
+					"com_id": appId
+				},
+				success: function (data) {
+					console.log(data);
+
+						var app = data.resultMap;
+						$("#logo").attr("src", app.com_logo);
+						$("#appName").html(app.com_name);
+						$("#fkje").html(app.com_quota);
+						if(app.com_star==5){
+							$("#fkcgl").attr("class", "star ");
+							
+						}else if(app.com_star==4){
+							$("#fkcgl").attr("class","star star_4");
+						
+						}else{
+							$("#fkcgl").attr("class", "star star_45");
+	
+						}
+						
+						$("#sqcgrs").html(app.applications_number);
+
+						var mrlx = app.com_interest;
+						var money1 = 1000*mrlx;
+						$("#mrlx").html(money1);
+						$("#fksj").html(app.fastest_lending_time);
+						var num = app.com_interest*100;
+						var com_interest = num.toFixed(2);
+						$("#rll").html(com_interest + "%");
+						$("#qxfw").html(app.term_scope);
+						$("#hkfs").html(app.repayment_method);
+						$("#sqtj").html(app.com_condition);
+						$("#sxcl").html(app.required_materials);
+						$("#sqfs").html(app.right_method);
+						$("#shfs").html(app.audit_certificatio);
+						$("#hksm").html(app.repayment_statemen);
+						$("#website_url").val(app.website_url);
+					}
+				
+			});
+		});
+
+
+		$(function name(params) {
+			$(".btns").click(function () {
+				var user = "";
+				var phone = "";
+				var idNum = "";
+	 			//var openid = $.cookie("openid"); 
+				var com_id = $("#comid").val();
+				
+				var website_url = $("#website_url").val();
+           		window.location.href = website_url;
+	
+				/* if(openid != null && openid != '' && openid != 'undefined'){ */
+					/* $.ajax({
+						type : "POST",
+						url : "/supermarket/wechatUserinfo/findUserinfoByOpenID",
+						data : {
+							"openid" : openid
+						},
+						async:false,
+						dataType:"JSON",
+						success : function(data) {
+							user = data.user_name;
+							phone = data.user_phone;
+							
+						}
+					}) */
+					
+				
+					/*  $.ajax({
+		                   url:"/supermarket/h5/home/save_h5apply",
+		                   type:"POST",
+		                   dataType:"json",
+		                   data:{com_id:com_id,user:user,phone:phone,idNum:idNum},
+			               success:function(data){
+			                	$(".wrap").hide();
+			                	var website_url = $("#website_url").val();
+			               		window.location.href = website_url;
+			               }
+					})  */
+				/* }else {
+					$(".wrap").show();
+					$("#submit").click(function () {
+							user = $("#user").val();
+							phone = $("#phone").val();
+							idNum = $("#idNum").val();
+							myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+							if(phone==null || phone==''){
+								alert("请输入手机号！");
+								return;
+							}
+					        if (!myreg.test(phone)) {
+					        	alert("请输入合法手机号！");
+					        	return;
+					        }
+					        if(user==null || user==''){
+					        	alert("请输入姓名！");
+					        	return;
+					        }
+					        if(idNum==null || idNum==''){
+					        	alert("请输入身份证号！");
+					        	return;
+					        }
+					        var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+					        if(reg.test(idNum) === false) 
+					        { 
+					          alert("身份证输入不合法！"); 
+					          return false; 
+					        } 
+						
+						
+						var com_id = $("#comid").val();
+
+						 $.ajax({
+			                   url:"/supermarket/h5/home/save_h5apply",
+			                   type:"POST",
+			                   dataType:"json",
+			                   data:{com_id:com_id,user:user,phone:phone,idNum:idNum},
+				               success:function(data){
+				                	$(".wrap").hide();
+				                	var website_url = $("#website_url").val();
+				               		window.location.href = website_url;
+				               }
+						}) 
+					})
+				} */
+			})
+		})
+	</script>
+</body>
+
+</html>

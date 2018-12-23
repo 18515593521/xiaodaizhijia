@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BackSupplier">
+
+	<sql id="supplier">
+		company_informatio.ci_id,
+		company_informatio.ci_name,
+		company_informatio.ci_username,
+		company_informatio.ci_userphone,
+		company_informatio.ci_address,
+		company_informatio.sys_sa_id,
+		date(company_informatio.create_time) create_time
+	</sql>
+	
+	<insert id="save_company_informatio" parameterType="map">
+		INSERT into company_informatio(ci_id,ci_name,ci_username,ci_userphone,ci_address,sys_sa_id,create_time)
+			VALUES(#{ci_id},#{ci_name},#{ci_username},#{ci_userphone},#{ci_address},#{sys_sa_id},#{create_time})
+	</insert>
+	
+	<select id="find_company_informatio" parameterType="map" resultType="map">
+		SELECT <include refid="supplier"></include>,sys_admin.sys_sa_name from company_informatio  
+			LEFT JOIN sys_admin on company_informatio.sys_sa_id = sys_admin.sys_sa_id where company_informatio.state=0
+			
+		<if test="ci_name!=null and ci_name!=''">
+			and company_informatio.ci_name=#{ci_name}
+		</if>
+		
+		<if test="ci_username!=null and ci_username!=''">
+			and company_informatio.ci_username=#{ci_username}
+		</if>
+		
+		<if test="sys_sa_id!=null and sys_sa_id!=''">
+			and company_informatio.sys_sa_id=#{sys_sa_id}
+		</if>
+		
+		ORDER BY create_time DESC
+	</select>
+	
+	<!-- 删除供应商 更改状态为1 -->
+	<update id="del_company_informatio" parameterType="java.lang.String">
+		UPDATE company_informatio SET company_informatio.state=1 
+		where company_informatio.ci_id = #{ci_id}
+	</update>
+	<!-- <delete id="del_company_informatio" parameterType="java.lang.String">
+		DELETE from company_informatio where ci_id=#{ci_id}
+	</delete> -->
+	
+	<select id="find_supplier" parameterType="java.lang.String" resultType="map">
+		SELECT <include refid="supplier"></include>  from company_informatio where ci_id=#{ci_id}
+	</select>
+	
+	<update id="update_supplier" parameterType="map">
+		UPDATE company_informatio SET ci_name=#{ci_name},ci_username=#{ci_username},ci_userphone=#{ci_userphone},
+		ci_address=#{ci_address},sys_sa_id=#{sys_sa_id},create_time=#{create_time}
+		where ci_id=#{ci_id}
+	</update>
+	
+	<!-- 查询角色对应对接人的管理员 -->
+	<select id="find_admin" resultType="map">	
+		SELECT sys_admin.sys_sa_id,sys_sa_name from sys_admin where sys_admin.sys_sr_id = 
+			(SELECT sys_sr_id from sys_role where sys_sr_name = '对接人')
+	</select>
+
+</mapper>

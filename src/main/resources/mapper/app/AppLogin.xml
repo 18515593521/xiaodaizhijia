@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="appLogin">
+
+	<sql id="user_userinfos">
+		user_id,
+		user_phone,
+		user_password,
+		user_name,
+		user_head_picture,
+		device_token,
+		device_model,
+		user_source,
+		create_time,
+		remarks
+	</sql>
+
+	<insert id="save_userinfo" parameterType="map">
+		INSERT INTO user_userinfos(
+			user_id,
+			user_phone,
+			user_password,
+			user_source,
+			create_time
+			)
+		VALUES(
+			#{user_id},#{user_phone},#{user_password},#{user_source},NOW()
+		)
+	</insert>
+	
+	<update id="update_userinfoPassword_ByPhone" parameterType="map">
+		UPDATE user_userinfos
+		SET user_password = #{user_password}
+		WHERE user_phone = #{user_phone}
+	</update>
+	
+	<!-- 用户注册手机号比对名单 -->
+	<select id="find_name_list" parameterType="java.lang.String" resultType="int">
+		SELECT COUNT(1) num FROM name_list WHERE phone=#{phone}
+	</select>
+	
+	<update id="update_namelist" parameterType="java.lang.String">
+		UPDATE user_userinfos SET name_list = 1 WHERE user_id = #{user_id} 
+	</update>
+
+</mapper>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="width: 100%">
+
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="Author" content="Amee" />
+	<meta name="Keywords" content="信用账单，最全的贷款超市" />
+	<link rel="stylesheet" href="./css/reset.css">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="../../wx/css/reset.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<script type="text/javascript">
+		! function (t) {
+			var e = 750,
+				i = t.document,
+				n = i.documentElement,
+				o = "orientationchange" in t ? "orientationchange" : "resize",
+				a = function t() {
+					var i = n.getBoundingClientRect().width;
+					return n.style.fontSize = 5 * Math.max(Math.min(i / e * 20, 11.2), 8.55) + "px", t
+				}();
+			n.setAttribute("data-dpr", t.navigator.appVersion.match(/iphone/gi) ? t.devicePixelRatio : 1), /iP(hone|od|ad)/.test(
+				t.navigator.userAgent) && (i.documentElement.classList.add("ios"), parseInt(t.navigator.appVersion.match(
+				/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8 && i.documentElement.classList.add("hairline")), i.addEventListener && (t.addEventListener(
+				o, a, !1), i.addEventListener("DOMContentLoaded", a, !1))
+		}(window);
+	</script>
+	<title>邀请好友赠红包</title>
+</head>
+
+<body class="share">
+    <img src="./image/invite.jpg" alt="">
+    <div class="btn" onclick="OCModel.shareMessage()">
+        立即邀请，得奖励
+    </div>
+
+</body>
+
+
+</html>

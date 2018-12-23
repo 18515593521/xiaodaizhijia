@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="appHome">
+
+	<!-- 滚动图 -->
+	<sql id="banner">
+		ban_id,
+		ban_title,
+		ban_content,
+		ban_picture,
+		ban_state,
+		create_time,
+		remarks
+	</sql>
+	
+	<!-- 资讯 -->
+	<sql id="news_flash">
+		nf_id,
+		nf_title,
+		nf_content,
+		create_time,
+		remarks
+	</sql>
+	
+	<sql id="commodityList">
+		IFNULL(commodity.com_id,'') com_id,										<!-- 商品ID（APP名称） -->
+		IFNULL(commodity.com_name,'') com_name,									<!-- 商品名称 -->
+		IFNULL(commodity.fastest_lending_time,'') fastest_lending_time,			<!-- 最快放款时间 -->
+		IFNULL(commodity.com_explain,'') com_explain,							<!-- 产品说明 -->
+		IFNULL(commodity.com_quota,'') com_quota,								<!-- 放款金额 -->
+		IFNULL(commodity.com_star,0) com_star,									<!-- 成功率（星级） -->
+		IFNULL(commodity.loan_amount,'') loan_amount,							<!-- 最高放款额 （以分为单位）-->
+		IFNULL(commodity.term_scope,'') term_scope,								<!-- 还款期限（7-14天） -->
+		IFNULL(commodity.applications_number,'') applications_number,			<!-- 申请成功人数 -->
+		IFNULL(commodity.com_logo,'') com_logo									<!-- 产品logo -->
+	</sql>
+	
+	<sql id="commodityDetails">
+		IFNULL(commodity.com_name,'') com_name,									<!-- 商品名称 -->
+		IFNULL(commodity.fastest_lending_time,'') fastest_lending_time,			<!-- 最快放款时间 -->
+		IFNULL(commodity.com_explain,'') com_explain,							<!-- 产品说明 -->
+		IFNULL(commodity.com_quota,'') com_quota,								<!-- 放款金额 -->
+		IFNULL(commodity.com_star,0) com_star,									<!-- 成功率（星级） -->
+		IFNULL(commodity.applications_number,'') applications_number,			<!-- 申请成功人数 -->
+		IFNULL(commodity.loan_amount,'') loan_amount,							<!-- 借款金额 最高放款额 （以分为单位）-->
+		IFNULL(commodity.everyday_interest,'') everyday_interest,				<!-- 每日利息 -->
+		IFNULL(commodity.com_interest,'') com_interest,							<!-- 日利率 -->
+		IFNULL(commodity.term_scope,'') term_scope,								<!-- 还款期限 -->
+		IFNULL(commodity.repayment_method,'') repayment_method,					<!-- 还款方式 -->
+		IFNULL(commodity.com_condition,'') com_condition,						<!-- 申请条件 -->
+		IFNULL(commodity.required_materials,'') required_materials,				<!-- 所需材料 -->
+		IFNULL(commodity.right_method,'') right_method,							<!-- 授权方式 -->
+		IFNULL(commodity.audit_certificatio,'') audit_certificatio,				<!-- 审核认证 -->
+		IFNULL(commodity.repayment_statemen,'') repayment_statemen,				<!-- 还款说明 -->
+		IFNULL(commodity.com_logo,'') com_logo,									<!-- 产品logo -->
+		IFNULL(commodity.website_url,'') website_url							<!-- 产品跳转地址 -->
+	</sql>
+
+	<!-- 查询首页banner图 -->
+	<select id="find_banner" resultType="map">
+		SELECT 
+			ban_title,
+			ban_content,
+			ban_picture,
+			ban_url
+		FROM 
+			banner
+		WHERE 
+			ban_state = 0
+	</select>
+
+	<!-- 查询首页跑马灯数据 -->
+	<select id="find_news_flash" resultType="map">
+		SELECT 
+			nf_title,
+			nf_content
+		FROM 
+			news_flash
+	</select>
+	
+	<!-- 查询商品列表 -->
+	<select id="find_commodityList" resultType="map" parameterType="map">
+		SELECT 
+			<include refid="commodityList"></include>
+		FROM
+			commodity
+		<where>
+			<!-- 默认 -->
+			<if test="sort_rule == 'default'"></if>
+			<!-- 下款快 -->
+			<if test="sort_rule == 'fastPayment'">
+				<!-- and lable_dic_id = 'e7fca29984af11e89ca300163e06af89' -->
+			</if>
+			<!-- 利息低 -->
+			<if test="sort_rule == 'lowInterest'">
+				<!-- and lable_dic_id = 'e80c1dce84af11e89ca300163e06af89' -->
+			</if>
+			<!-- 额度高 -->
+			<if test="sort_rule == 'highAmount'">
+				<!-- and lable_dic_id = 'e803a13d84af11e89ca300163e06af89' -->
+			</if>
+			AND state = 0 and isdisplay=0
+		</where>
+		ORDER BY com_sort
+		LIMIT #{page},#{pageSize}
+	</select>
+	
+	<!-- 查询商品详细信息 -->
+	<select id="find_commodityDetails" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			<include refid="commodityDetails"></include>
+		FROM
+			commodity
+		WHERE 
+			com_id = #{com_id} 
+	</select>
+
+	<!-- 查询用户已读消息数量 -->
+	<select id="find_userReadCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT 
+			read_count 
+		FROM 
+			user_userinfos 
+		where 
+			user_id = #{user_id}
+	</select>
+	
+	<!-- 查询消息总数量 -->
+	<select id="find_newsCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT 
+			COUNT(1) 
+		FROM 
+			user_push 
+		WHERE 
+			 (user_id = '' OR user_id IS NULL) 
+			OR 
+			 user_id = #{user_id}
+	</select>
+	<!-- 通过商品分类ID查询商品列表 -->
+	<select id="find_commodityListByDic_id" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			<include refid="commodityList"></include>
+		FROM
+			commodity
+		<where>
+			AND state = 0 and isdisplay=0
+			AND characteris_dic_id = #{dic_id}
+		</where>
+	</select>
+	
+</mapper>

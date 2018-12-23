@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backNews">
+		<sql id="news">
+			user_push.up_id,
+			user_push.up_title,
+			user_push.up_content,
+			user_push.up_picture,
+			user_push.up_url,
+			user_push.user_id,
+			user_push.create_time,
+			user_push.remarks,
+			user_userinfos.user_name
+		</sql>
+		
+		<!-- 分页查询 -->
+	<select id="find_news" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">
+		SELECT <include refid="news"></include> from user_push
+		LEFT JOIN user_userinfos ON user_push.user_id = user_userinfos.user_id
+		where 1=1
+		<if test="user_name!=null and user_name!=''">
+			and user_name=#{user_name}
+		</if>
+		<if test="dt1!=null and dt1!=''">
+			and user_push.create_time &gt; #{dt1}
+		</if>
+		<if test="dt2!=null and dt2!=''">
+			and user_push.create_time &lt; #{dt2}
+		</if>
+	</select>
+	<insert id="save_news" parameterType="map">
+		insert into user_push(up_id,up_title,up_content,up_picture,up_url,create_time) 
+		VALUES(#{up_id},#{up_title},#{up_content},#{up_picture},#{up_url},NOW())
+	</insert>
+</mapper>

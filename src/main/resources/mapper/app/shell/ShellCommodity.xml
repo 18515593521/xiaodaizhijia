@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shellCommodity">
+	<sql id="com"> 
+		com_id,
+		com_name,
+		ty_id,
+		phone,
+	    lease_time,
+		com_picture,
+		state,
+		lease_number,
+		describes,
+		release_time
+	</sql>
+
+	<insert id="save_commodity" parameterType="map">
+		INSERT INTO shell_commodity 
+		VALUES(#{com_id},#{com_name},#{ty_id},#{phone},NOW(),#{com_picture},#{state},#{lease_number},#{describes},#{release_time})
+	</insert>
+	
+	<!-- 根据用户id查询用户手机号 -->
+	<select id="find_phone" resultType="java.lang.String" parameterType="java.lang.String">	
+		SELECT user_phone from user_userinfos where user_id=#{user_id}
+	</select>
+	
+	<!-- 分类查询商品 -->
+	<select id="find_com" resultType="map" parameterType="java.lang.String">
+		SELECT <include refid="com"></include> from shell_commodity WHERE shell_commodity.ty_id=#{ty_id}
+	</select>
+	
+	<!-- 查询轮播图片地址 -->
+	<select id="find_banner" resultType="map">
+		SELECT  shell_banner.bn_id,shell_banner.banner_picture from shell_banner
+	</select>
+	
+	
+	<select id="update_comstate" parameterType="java.lang.String">
+		UPDATE shell_commodity SET state =1 where com_id = #{com_id}
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backBankCard">
+	<sql id="bankCard">
+		bc_id,
+		bc_name,
+		bc_img,
+		bc_url,
+		bc_describe,
+		create_time,
+		state
+	</sql>
+	
+	<select id="find_bankCard" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">
+		SELECT <include refid="bankCard"></include> FROM bank_card WHERE isdisplay = 0 
+		<if test="bc_name!=null and bc_name!=''">
+			and bc_name=#{bc_name}
+		</if>
+		
+	</select>
+	
+	<update id="upd_state" parameterType="map">
+		UPDATE bank_card SET state = #{state} WHERE bc_id = #{bc_id}
+	</update>
+	
+	<update id="upd_isdisplay" parameterType="java.lang.String">	
+		UPDATE bank_card SET isdisplay = 1 WHERE bc_id = #{bc_id}
+	</update>
+	
+	<insert id="save_bankCard" parameterType="map">
+		INSERT INTO bank_card(bc_id,bc_name,bc_img,bc_url,bc_describe,create_time) 
+		VALUES(#{bc_id},#{bc_name},#{bc_img},#{bc_url},#{bc_describe},NOW())
+	</insert>
+	
+	<select id="findByIdCard" parameterType="java.lang.String" resultType="map">
+		SELECT bc_id,bc_name,bc_img,bc_url,bc_describe,create_time FROM bank_card 
+		WHERE bc_id = #{bc_id}
+	</select>
+	
+	<update id="upd_card" parameterType="map">
+		UPDATE bank_card SET bc_name = #{bc_name},
+		<if test="bc_img != null and bc_img != ''">
+			bc_img = #{bc_img},
+		</if>
+		bc_url = #{bc_url},bc_describe=#{bc_describe}
+		WHERE bc_id = #{bc_id}
+	</update>
+	
+</mapper>

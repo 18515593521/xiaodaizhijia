@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Channel">
+	<!-- 渠道权限查询管理员 -->
+	<select id="channelPowerList" resultType="com.dd.supermarket.utils.PageData">
+		SELECT sys_sa_id,sys_sa_loginname
+		FROM sys_admin
+		WHERE state = 0
+		<if test="sys_sa_loginname != null and sys_sa_loginname != ''">
+				and sys_sa_loginname LIKE CONCAT('%',#{sys_sa_loginname},'%')
+		</if>
+		GROUP BY create_time
+	</select>
+	
+	<!-- 查询管理员对应的渠道权限 -->
+	<select id="channelPowerBuId" parameterType="com.dd.supermarket.utils.PageData"
+		resultType="com.dd.supermarket.utils.PageData">
+		SELECT
+		sc.cn_name
+		FROM
+		admin_channel ac
+		INNER JOIN
+		sys_channel sc
+		ON
+		ac.cn_id = sc.cn_id
+		WHERE
+		ac.adm_id=#{sys_sa_id}
+	</select>
+	
+	<select id="channelPowerAll" resultType="com.dd.supermarket.utils.PageData">
+		select * from
+		sys_channel
+	</select>
+
+	<select id="channelPowerById" resultType="com.dd.supermarket.utils.PageData"
+		parameterType="com.dd.supermarket.utils.PageData">
+		SELECT *FROM admin_channel where adm_id = #{adm_id}
+	</select>
+	
+	
+	<insert id="addChannelPower" parameterType="com.dd.supermarket.utils.PageData">
+		INSERT INTO
+		admin_channel
+		VALUES(
+		REPLACE(UUID(),'-',''),
+		#{adm_id},
+		#{cn_id}
+		)
+	</insert>
+
+
+	<delete id="delChannelPower" parameterType="com.dd.supermarket.utils.PageData">
+		delete from
+		admin_channel where adm_id = #{adm_id}
+	</delete>
+	
+	<select id="findcn_name" resultType="map">
+		SELECT cn_name FROM sys_channel WHERE state = 0
+	</select>
+	
+</mapper>

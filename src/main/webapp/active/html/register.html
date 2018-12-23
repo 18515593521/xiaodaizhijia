@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="width: 100%">
+
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="Author" content="Amee" />
+	<meta name="Keywords" content="加油花" />
+	<meta name="Description" content="低利率，快速高效，下款快" />
+	<link rel="stylesheet" href="../../lib/layer.css">
+	<link rel="stylesheet" href="../../css/reset.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<script type="text/javascript">
+		! function (t) {
+			var e = 750,
+				i = t.document,
+				n = i.documentElement,
+				o = "orientationchange" in t ? "orientationchange" : "resize",
+				a = function t() {
+					var i = n.getBoundingClientRect().width;
+					return n.style.fontSize = 5 * Math.max(Math.min(i / e * 20, 11.2), 8.55) + "px", t
+				}();
+			n.setAttribute("data-dpr", t.navigator.appVersion.match(/iphone/gi) ? t.devicePixelRatio : 1), /iP(hone|od|ad)/.test(
+				t.navigator.userAgent) && (i.documentElement.classList.add("ios"), parseInt(t.navigator.appVersion.match(
+				/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8 && i.documentElement.classList.add("hairline")), i.addEventListener && (t.addEventListener(
+				o, a, !1), i.addEventListener("DOMContentLoaded", a, !1))
+		}(window);
+	</script>
+	<title>天天领免息券</title>
+</head>
+
+<body class="new4">
+	<!-- <div class="bgimg">
+			<img src="../images/image/bgimg.png">
+	</div> -->
+
+	<div class="input">
+		<div class="row">
+			<input type="tel" id="phone" placeholder="请输入手机号">
+		</div>
+		<div class="row id">
+			<input type="text" id="idNum" placeholder="请输入身份证号">
+		</div>
+		<div class="row code">
+			<input type="tel" class="codes" id="smsCode" placeholder="请输入验证码">
+			<input id="getting" type="button" value="获取验证码" />
+		</div>
+		<div class="row pas">
+			<input type="text" id="pwd" placeholder="请输入密码">
+		</div>
+		<div class="other">
+				<p class="agreement">申请即代表同意
+						<a href="/h5/protocol.html">《服务与隐私协议》</a>
+					</p>
+					<div class="btn" id="apply">注册领红包</div>
+		</div>
+	</div>
+	
+	<!-- <p><span></span>tongyi </p> -->
+
+
+	<!-- <div class="down flex-row-between  ">
+		<div class="phone">
+				<a href="https://itunes.apple.com/cn/app/id1367358101?mt=8">ios下载</a> 
+		</div>
+		<div class="phone Android">
+				<a href="http://18052199736.fx.sj.360.cn/qcms/view/t/detail?id=3978604">安卓下载</a>
+		</div>
+
+	</div> -->
+</body>
+<script src="../../h5/js/jquery-3.2.1.min.js"></script>
+<script src="../../h5/js/CryptoJS/core.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../h5/js/CryptoJS/enc-base64.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../h5/js/CryptoJS/cipher-core.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../h5/js/CryptoJS/tripledes.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../h5/js/CryptoJS/mode-ecb.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script src="../../js/sendSmsCode.js"></script>
+<script src="../../js/register.js"></script>
+
+<script type="text/javascript">
+	$(function () {
+		//验证码
+		getCodeNum_SendCodeNum($('#getting'));
+	});
+	$("#apply").click(function () {
+		var telPhone = $("#phone").val();
+		var idNum = $("#idNum").val();
+		var smsCode = $("#smsCode").val();
+		var pwd = $("#pwd").val();
+		/* if(!isPhoneNum())return;*/
+		regMod(telPhone,idNum, smsCode, pwd, 'code4.html'); //开始注册
+	})
+</script>
+
+</html>

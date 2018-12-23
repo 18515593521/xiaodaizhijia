@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="appUserinfo">
+
+	<sql id="user_userinfos">
+		user_id,
+		user_phone,
+		user_password,
+		user_name,
+		user_head_picture,
+		device_token,
+		device_model,
+		user_source,
+		create_time,
+		remarks
+	</sql>
+	
+	<sql id="commodityList">
+		IFNULL(commodity.com_id,'') com_id,									<!-- 商品ID（APP名称） -->
+		IFNULL(commodity.com_name,'') com_name,								<!-- 商品名称 -->
+		IFNULL(commodity.fastest_lending_time,'') fastest_lending_time,		<!-- 最快放款时间 -->
+		IFNULL(commodity.com_explain,'') com_explain,						<!-- 产品说明 -->
+		IFNULL(commodity.com_quota,'') com_quota,							<!-- 放款金额 -->
+		IFNULL(commodity.com_star,'') com_star,								<!-- 成功率（星级） -->
+		IFNULL(commodity.applications_number,'') applications_number,		<!-- 申请成功人数 -->
+		IFNULL(commodity.com_logo,'') com_logo								<!-- 产品logo -->
+	</sql>
+	
+	<!-- 消息推送 -->
+	<sql id="user_push">
+		IFNULL(user_push.up_id,'') up_id,
+		IFNULL(user_push.up_title,'') up_title,
+		IFNULL(user_push.up_content,'') up_content,
+		IFNULL(user_push.up_picture,'') up_picture,
+		IFNULL(user_push.up_url,'') up_url,
+		IFNULL(user_push.user_id,'') user_id,
+		IFNULL(user_push.create_time,'') create_time,
+		IFNULL(user_push.remarks,'') remarks
+	</sql>
+
+	<!-- 根据用户手机号查询用户信息 -->
+	<select id="find_userinfoByPhone" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			<include refid="user_userinfos"></include>
+		FROM 
+			user_userinfos
+		WHERE user_userinfos.user_phone = #{phone}
+	</select>
+
+	<!-- 保存用户足迹 -->
+	<insert id="save_userFootprint" parameterType="map">
+		INSERT INTO 
+			user_footprint(uf_id,user_id,com_id,uf_state,create_time)
+		VALUES(
+			REPLACE(UUID(),'-',''),#{user_id},#{com_id},0,NOW()
+		)
+	</insert>
+
+	<!-- 查询用户足迹 -->
+	<select id="find_userFootprintByUserId" resultType="map" parameterType="map">
+		SELECT 
+			<include refid="commodityList"></include>
+			,
+			user_footprint.com_id,
+			DATE_FORMAT(user_footprint.create_time,'%Y-%m-%d %H:%i:%s') footprint_time
+		FROM 
+			user_footprint 
+		LEFT JOIN commodity ON user_footprint.com_id = commodity.com_id
+		WHERE 
+			user_footprint.user_id = #{user_id}
+		GROUP BY user_footprint.com_id
+		ORDER BY user_footprint.create_time DESC
+		LIMIT #{page},#{pageSize}
+	</select>
+	
+	<!-- 查询用户足迹总数 -->
+	<select id="find_userFootprintCountByUserId" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT 
+			COUNT(DISTINCT user_footprint.com_id)
+		FROM 
+			user_footprint 
+		WHERE 
+			user_footprint.user_id = #{user_id}
+	</select>
+	
+	<!-- 保存用户意见反馈 -->
+	<insert id="save_userFeedback" parameterType="map">
+		INSERT INTO 
+			user_feedback(uf_id,user_id,uf_content,uf_picture,create_time,remarks)
+		VALUES(
+			REPLACE(UUID(),'-',''),#{user_id},#{uf_content},#{uf_picture},NOW(),#{remarks}
+		)
+		
+	</insert>
+	
+	<!-- 查询用户消息 -->
+	<select id="find_userPushByUserId" resultType="map" parameterType="map">
+		SELECT 
+			user_push.up_title,
+			user_push.up_content,
+			user_push.up_picture,
+			user_push.up_url,
+			DATE_FORMAT(user_push.create_time,'%Y-%m-%d %H:%i:%s') create_time
+		FROM 
+			user_push
+		WHERE (user_id='' OR user_id = NULL) OR user_id = #{user_id}
+		ORDER BY create_time DESC
+		LIMIT #{page},#{pageSize}
+	</select>
+	
+	<!-- 修改用户已读消息数量 -->
+	<update id="update_userinfosReadCountByUserId" parameterType="map">
+		UPDATE 
+			user_userinfos
+		SET 
+			read_count = (SELECT COUNT(1) FROM user_push WHERE (user_id='' OR user_id = NULL) OR user_id = #{user_id})
+		WHERE 
+			user_id = #{user_id}
+	</update>
+	
+	<!-- 保存商务合作信息 -->
+	<insert id="save_cooperation" parameterType="map">
+		INSERT INTO 
+			business_cooperati(bc_id,user_id,contact_email,contact_phone,companyName,bc_content,bc_state,create_time,remarks)
+		VALUES(
+			REPLACE(UUID(),'-',''),#{user_id},#{contact_email},#{contact_phone},#{companyName},#{bc_content},0,NOW(),''
+		)
+	</insert>
+	
+	
+	<insert id="save_Apply" parameterType="map">
+		INSERT INTO app_apply(
+			aa_id,
+			com_id,
+			user_id,
+			create_time
+			)
+		VALUES(
+			#{aa_id},#{com_id},#{user_id},NOW()
+		)
+	</insert>
+	
+	<!-- 保存用户token -->
+	<update id="up_token" parameterType="map">
+		UPDATE user_userinfos SET device_token = #{device_token} WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 修改用户手机型号 app版本号 -->
+	<update id="up_appNV" parameterType="map">
+		UPDATE user_userinfos SET appN_V=#{appN_V},device_model=#{device_model} WHERE user_id=#{user_id}
+	</update>
+</mapper>

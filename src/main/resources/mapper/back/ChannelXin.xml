@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ChannelXin">
+	<select id="findChannelList" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">
+	
+			SELECT
+			cn_id,
+			cn_name,
+			create_by,
+			create_time,
+			cn_title,
+			subsidiary,
+			public_private,
+			state,
+			update_time
+			FROM
+			sys_channel
+			where state = 0
+			<if test="cn_title != null and cn_title != ''">
+				and cn_title LIKE CONCAT('%',#{cn_title},'%')
+			</if>
+			ORDER BY create_time desc
+		</select>
+		
+		
+	<insert id="addChannel" parameterType="com.dd.supermarket.utils.PageData">
+		INSERT INTO
+		sys_channel(cn_id,cn_name,create_by,create_time,
+		cn_title,
+		subsidiary,
+		public_private,
+		state)
+		VALUES
+		(REPLACE(UUID(),'-',''),#{cn_name},#{create_by},NOW()
+		,#{cn_title},#{subsidiary},#{public_private},#{state});
+	</insert>
+	
+	<select id="singleChannel" parameterType="com.dd.supermarket.utils.PageData"
+		resultType="com.dd.supermarket.utils.PageData">
+		SELECT
+		cn_id,
+		cn_name,
+		create_by,
+		create_time,
+		cn_title,
+		subsidiary,
+		public_private,
+		state,
+		update_time
+		FROM
+		sys_channel
+		WHERE cn_id = #{cn_id}
+	</select>
+
+	<update id="update" parameterType="com.dd.supermarket.utils.PageData">
+		UPDATE
+		sys_channel
+		SET 
+		cn_name = #{cn_name},
+		cn_title = #{cn_title},
+		subsidiary = #{subsidiary},
+		public_private = #{public_private},
+		state = #{state},
+		update_time = NOW()
+		WHERE
+		cn_id = #{cn_id}
+	</update>
+	
+	<update id="updateChannel" parameterType="com.dd.supermarket.utils.PageData">
+		UPDATE
+		sys_channel
+		SET 
+		state = 1
+		WHERE
+		cn_id = #{cn_id}
+	</update>
+	
+	<delete id="delChannelPowerByCnid" parameterType="com.dd.supermarket.utils.PageData">
+		delete from
+		admin_channel where adm_id = #{adm_id}
+	</delete>
+	
+	<select id="getChannel" resultType="com.dd.supermarket.utils.PageData"
+		parameterType="com.dd.supermarket.utils.PageData">
+			SELECT cn_title,cn_name,(SELECT COUNT(user_id) FROM user_userinfos WHERE user_userinfos.user_source=sys_channel.cn_name <if test="startTime != null and startTime != '' and endtTime != null and endtTime != ''">
+				and user_userinfos.create_time &lt;= #{endtTime} and user_userinfos.create_time &gt;=#{startTime}
+				</if>) register_num 
+			FROM sys_channel WHERE is_show = 1
+		<if test="cn_name != null and cn_name != ''">
+			and cn_name=#{cn_name}
+		</if>
+		
+	</select>
+	
+	<select id="find_naturalnum"  resultType="com.dd.supermarket.utils.PageData"
+		parameterType="com.dd.supermarket.utils.PageData" >		
+		SELECT COUNT(user_id) register_num FROM user_userinfos WHERE user_userinfos.user_source IS NULL OR user_userinfos.user_source='' 
+		<if test="startTime != null and startTime != '' and endtTime != null and endtTime != ''">
+			and create_time &lt;= #{endtTime} and create_time &gt;=#{startTime}
+		</if>
+		
+		<if test="qd_name != null and qd_name != ''">
+			and u_source=#{qd_name}
+		</if>
+	</select>
+	
+	<select id="channelByStateAndIsShow" parameterType="com.dd.supermarket.utils.PageData"
+		resultType="com.dd.supermarket.utils.PageData">
+		SELECT
+		cn_name,cn_title,cn_title
+		FROM
+		sys_channel where 1 = 1 
+		<if test="state != null">
+			and state = #{state}
+		</if>
+		<if test="is_show != null">
+			and is_show = #{is_show}
+		</if>
+	</select>
+	
+	
+	<!-- 外部渠道统计 -->
+	<select id="find_channelout" parameterType="com.dd.supermarket.utils.PageData"
+		resultType="com.dd.supermarket.utils.PageData">
+		SELECT
+			cn_title,
+			cn_name,
+			price,
+			(
+				SELECT
+					COUNT(user_id)
+				FROM
+					user_userinfos
+				WHERE
+					user_userinfos.user_source = sys_channel.cn_name
+					<if test="startTime != null and startTime != '' and endtTime != null and endtTime != ''">
+						and user_userinfos.create_time &lt;= #{endtTime} and user_userinfos.create_time &gt;=#{startTime}
+					</if>					
+			) register_num,
+			(
+				SELECT
+					COUNT(id)
+				FROM
+					login_log
+				WHERE
+					ul_id IN (
+						SELECT
+							user_id
+						FROM
+							user_userinfos
+						WHERE
+							user_userinfos.user_source = sys_channel.cn_name
+					)
+			) login_num,
+			(
+				SELECT
+					COUNT(user_id)
+				FROM
+					user_userinfos
+				WHERE
+					user_userinfos.user_source = sys_channel.cn_name
+				AND DATE_FORMAT(
+					user_userinfos.create_time,
+					'%T'
+				) &lt; '24:00:00'
+				AND DATE_FORMAT(
+					user_userinfos.create_time,
+					'%T'
+				) &gt; '06:00:00'
+				<if test="startTime != null and startTime != '' and endtTime != null and endtTime != ''">
+					and user_userinfos.create_time &lt;= #{endtTime} and user_userinfos.create_time &gt;=#{startTime}
+				</if>
+			) settlement_num
+		FROM
+			sys_channel
+		WHERE
+			is_show = 0
+		AND state = 0
+		<if test="cn_name != null and cn_name != ''">
+			and cn_name=#{cn_name}
+		</if>
+		ORDER BY register_num DESC
+		
+	</select>
+	
+	<!-- 查询管理员渠道权限 -->
+	<select id="find_channelById" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT group_concat(cn_name) FROM admin_channel 
+		LEFT JOIN sys_channel ON admin_channel.cn_id =  sys_channel.cn_id
+		WHERE adm_id=#{adm_id}
+	</select>
+	
+	<!-- 渠道权限查询用户 -->
+	<select id="find_userByChannel" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">		
+		SELECT
+			user_phone,
+			create_time,
+			user_source
+		FROM
+			user_userinfos
+		WHERE
+			user_source IN (
+				${channel}
+			)
+		AND DATE_FORMAT(
+			user_userinfos.create_time,
+			'%T'
+		) 	&gt; '06:00:00'
+		
+		<if test="user_phone!=null and user_phone!=''">
+			AND user_phone = #{user_phone}
+		</if>
+		<if test="dt1 != null and dt1 != '' and dt2 != null and dt2 != ''">
+			and DATE(create_time) &gt;= #{dt1} and DATE(create_time) &lt;=#{dt2}
+		</if>
+		ORDER BY create_time desc
+	</select>
+	
+	<!-- 查询渠道信息 -->
+	<select id="find_channelAll" resultType="com.dd.supermarket.utils.PageData">		
+		SELECT cn_name,price FROM sys_channel 
+		WHERE state=0 AND is_show= 0 AND is_use=0
+	</select>
+	
+	<!-- 今日渠道结算量 -->
+	<select id="todayChannelAll" resultType="com.dd.supermarket.utils.PageData" parameterType="com.dd.supermarket.utils.PageData">				
+		SELECT COUNT(user_id) today_num FROM user_userinfos WHERE user_source = #{name}
+		AND DATE_FORMAT(
+			user_userinfos.create_time,
+			'%T'
+		) 	&gt; '06:00:00'
+		AND DATE(user_userinfos.create_time) = DATE(NOW())
+	</select>
+	
+	<!-- 今日渠道注册量 -->
+	<select id="todayRegisterNum" resultType="com.dd.supermarket.utils.PageData" parameterType="com.dd.supermarket.utils.PageData">				
+		SELECT COUNT(user_id) zcl FROM user_userinfos WHERE user_source in (
+			select cn_name from sys_channel where state = 0 and is_show = 0 AND is_use=0)
+			AND DATE(user_userinfos.create_time) = DATE(NOW())
+	</select>
+	
+	<!-- 渠道结算总量 -->
+	<select id="settlementNum" resultType="com.dd.supermarket.utils.PageData" parameterType="com.dd.supermarket.utils.PageData">				
+		SELECT COUNT(user_id) Settlement_num FROM user_userinfos WHERE user_source = #{name}
+		AND DATE_FORMAT(
+			user_userinfos.create_time,
+			'%T'
+		) 	&gt; '06:00:00'
+		<if test="dt1 != null and dt1 != '' and dt2 != null and dt2 != ''">
+			and DATE(create_time) &gt;= #{dt1} and DATE(create_time) &lt;=#{dt2}
+		</if>
+	</select>
+	
+	<!-- 渠道注册总量 -->
+	<select id="registerNum" resultType="com.dd.supermarket.utils.PageData" parameterType="com.dd.supermarket.utils.PageData">				
+		SELECT COUNT(user_id) register_name FROM user_userinfos WHERE user_source in (
+			select cn_name from sys_channel where state = 0 and is_show = 0 AND is_use=0)
+			<if test="dt1 != null and dt1 != '' and dt2 != null and dt2 != ''">
+			and DATE(create_time) &gt;= #{dt1} and DATE(create_time) &lt;=#{dt2}
+			</if>
+	</select>
+</mapper>

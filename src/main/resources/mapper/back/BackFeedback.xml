@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backfeedback">
+	<sql id="feedback">
+		user_feedback.uf_id,
+		user_feedback.user_id,
+		user_feedback.uf_content,
+		user_feedback.uf_picture,
+		user_feedback.create_time,
+		user_feedback.remarks,
+		user_userinfos.user_name,
+		user_userinfos.user_phone
+	</sql>
+	<!-- 分页查询 -->
+	<select id="find_feedback" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">	
+		SELECT <include refid="feedback"></include> from user_feedback 
+		LEFT JOIN user_userinfos ON user_userinfos.user_id=user_feedback.user_id
+		where 1=1
+		<if test="user_name!=null and user_name!=''">
+			and user_name=#{user_name}
+		</if>
+		<if test="user_phone!=null and user_phone!=''">
+			and user_phone = #{user_phone}
+		</if>
+		
+		ORDER BY user_feedback.create_time DESC
+	</select>
+</mapper>

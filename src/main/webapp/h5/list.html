@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="Author" content="Amee" />
+		<meta name="Keywords" content="" />
+		<meta name="Description" content="" />
+		<link rel="stylesheet" href="../css/reset.css">
+		<link rel="stylesheet" href="./css/market.css">
+		<script type="text/javascript">
+			! function (t) {
+				var e = 750,
+					i = t.document,
+					n = i.documentElement,
+					o = "orientationchange" in t ? "orientationchange" : "resize",
+					a = function t() {
+						var i = n.getBoundingClientRect().width;
+						return n.style.fontSize = 5 * Math.max(Math.min(i / e * 20, 11.2), 8.55) + "px", t
+					}();
+				n.setAttribute("data-dpr", t.navigator.appVersion.match(/iphone/gi) ? t.devicePixelRatio : 1), /iP(hone|od|ad)/.test(
+					t.navigator.userAgent) && (i.documentElement.classList.add("ios"), parseInt(t.navigator.appVersion.match(
+					/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8 && i.documentElement.classList.add("hairline")), i.addEventListener && (t.addEventListener(
+					o, a, !1), i.addEventListener("DOMContentLoaded", a, !1))
+			}(window);
+		</script>
+		<title>超市列表</title>
+	</head>
+
+	<body class="market">
+		<div class="markets" id="appList">
+			<!-- <a class="item" href="./details.html">
+				<div class="logo">
+					<img src="../images/image/fighting.jpg">
+				</div>
+				<div class="cont">
+					<div class="tit">
+						<p class="name">开心花</p>
+						<p class="forte">最快放款
+							<span class="color_money">10分钟</span>
+						</p>
+					</div>
+					<p>3步申请，30秒提现</p>
+					<p>可贷款金额
+						<span class="color_money">800-2000</span>
+					</p>
+					<div class="sth">
+						<p class="star star_4"> 成功率：</p>
+						<p class="number">
+							<span class="color_money">9826</span>人成功申请</p>
+					</div>
+				</div>
+			</a>
+			<a class="item">
+				<div class="logo">
+					<img src="../images/image/fighting.jpg">
+				</div>
+				<div class="cont">
+					<div class="tit">
+						<p class="name">开心花</p>
+						<p class="forte">最快放款
+							<span class="color_money">10分钟</span>
+						</p>
+					</div>
+					<p>3步申请，30秒提现</p>
+					<p>可贷款金额
+						<span class="color_money">800-2000</span>
+					</p>
+					<div class="sth">
+						<p class="star star_45"> 成功率：</p>
+						<p class="number">
+							<span class="color_money">9826</span>人成功申请</p>
+					</div>
+				</div>
+			</a>
+			<a class="item">
+				<div class="logo">
+					<img src="../images/image/fighting.jpg">
+				</div>
+				<div class="cont">
+					<div class="tit">
+						<p class="name">开心花</p>
+						<p class="forte">最快放款
+							<span class="color_money">10分钟</span>
+						</p>
+					</div>
+					<p>3步申请，30秒提现</p>
+					<p>可贷款金额
+						<span class="color_money">800-2000</span>
+					</p>
+					<div class="sth">
+						<p class="star"> 成功率：</p>
+						<p class="number">
+							<span class="color_money">9826</span>人成功申请</p>
+					</div>
+				</div>
+			</a>
+			<a class="item">
+				<div class="logo">
+					<img src="../images/image/fighting.jpg">
+				</div>
+				<div class="cont">
+					<div class="tit">
+						<p class="name">开心花</p>
+						<p class="forte">最快放款
+							<span class="color_money">10分钟</span>
+						</p>
+					</div>
+					<p>3步申请，30秒提现</p>
+					<p>可贷款金额
+						<span class="color_money">800-2000</span>
+					</p>
+					<div class="sth">
+						<p class="star"> 成功率：</p>
+						<p class="number">
+							<span class="color_money">9826</span>人成功申请</p>
+					</div>
+				</div>
+			</a> -->
+		</div>
+		<script type="text/javascript" src="../back/js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var lable_dic_id = getQueryString("lable_dic_id");  
+				 $.ajax({
+	                    url:"/supermarket/h5/home/getHomeDataById",
+	                    type:"POST",
+	                    dataType:"json",
+	                    data:{lable_dic_id:lable_dic_id},
+		                success:function(data){
+							var row = data.resultMap;
+							var appStr = "";
+							$.each(row, function (index, list) {
+								var st = "star_"+list.com_star;
+								appStr += "<a class='item' href='javascript:;' lang='" + list.com_id + "'><div class='logo'><img src=" + list.com_logo + "></div>" 
+								appStr +="<div class='cont'><div class='tit'><p class='name'>" + list.com_name + "</p><p class='forte'>最快放款"
+								appStr +="<span class='color_money'>" + list.fastest_lending_time + "</span></p></div><p>" + list.term_scope + "</p>" 
+								appStr +="<p>可贷款金额<span class='color_money'>" + list.com_quota + "</span></p><div class='sth'>" 
+								if(list.com_star==5){
+									appStr +="<p class='star'> 成功率：</p>"
+								}else if(list.com_star==4){
+									appStr +="<p class='star star_4'> 成功率：</p>"
+								}else{
+									appStr +="<p class='star star_45'> 成功率：</p>"
+								}
+									
+								appStr +="<p class='number'><span class='color_money'>" + list.applications_number +"</span>人成功申请</p></div></div></a>"
+							});
+							if(!appStr.length)
+								appStr = "<p style='text-align: center;'>对不起，没有更多产品了~</p>";
+							
+							$("#appList").html(appStr);
+		                }
+	        		}) 
+				
+				
+				function getQueryString(key) {
+					var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+					var r = window.location.search.substr(1).match(reg);
+					if (r != null)
+						return unescape(r[2]);
+					return "";
+				}
+						
+								
+				/* var urlStr = window.location.search;
+				searchURL = urlStr.substring(1, urlStr.length);
+				var appTitle = searchURL.split("=")[1];
+				//var appTitle = localStorage.getItem("appTitle");
+				if(appTitle == "0") {
+					appTitle = "";
+				}
+				
+				$.ajax({
+					type: "post",
+					url: "/supermarket/h5/home/getHomeData",
+					async: true,
+					
+					success: function(data) {
+						var row = data.resultMap;
+						var appStr = "";
+						$.each(row, function (index, list) {
+
+							var st = "star_"+list.com_star;
+							appStr += "<a class='item' href='javascript:;' lang='" + list.com_id + "'><div class='logo'><img src=" + list.com_logo + "></div>" 
+							appStr +="<div class='cont'><div class='tit'><p class='name'>" + list.com_name + "</p><p class='forte'>最快放款"
+							appStr +="<span class='color_money'>" + list.fastest_lending_time + "</span></p></div><p>" + list.term_scope + "</p>" 
+							appStr +="<p>可贷款金额<span class='color_money'>" + list.com_quota + "</span></p><div class='sth'>" 
+							if(list.com_star==5){
+								appStr +="<p class='star'> 成功率：</p>"
+							}else if(list.com_star==4){
+								appStr +="<p class='star star_4'> 成功率：</p>"
+							}else{
+								appStr +="<p class='star star_45'> 成功率：</p>"
+							}
+								
+							appStr +="<p class='number'><span class='color_money'>" + list.applications_number +"</span>人成功申请</p></div></div></a>"
+						});
+						$("#appList").html(appStr);
+				}); */
+				
+				$("#appList").on("click", "a", function() {
+					//alert($(this).attr("lang"));
+					var appId = $(this).attr("lang");
+					//localStorage.setItem("appId", appId);
+					window.location.href = "details.html?appId=" + appId;
+
+				});
+			});
+		</script>
+	</body>
+
+</html>

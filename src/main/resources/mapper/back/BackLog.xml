@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backLog">
+	<sql id="log">
+		sys_admin.sys_sa_name,
+		sys_log.sys_sl_id,
+		sys_log.sys_sa_id,
+		sys_log.sys_log_content,
+		sys_log.create_time,
+		sys_log.reamarks
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="find_log" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">
+		SELECT <include refid="log"></include> from sys_log
+		LEFT JOIN sys_admin ON sys_admin.sys_sa_id = sys_log.sys_sa_id
+		WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) &lt;= DATE(sys_log.create_time)
+		<if test="sys_sa_name!=null and sys_sa_name!=''">
+			and sys_sa_name=#{sys_sa_name}
+		</if>
+		<if test="dt1!=null and dt1!=''">
+			and sys_log.create_time &gt; #{dt1}
+		</if>
+		<if test="dt2!=null and dt2!=''">
+			and sys_log.create_time &lt; #{dt2}
+		</if>
+		
+		ORDER BY sys_log.create_time DESC
+	</select>
+	
+	<insert id="save_log" parameterType="map">
+		INSERT into sys_log(sys_sl_id,sys_sa_id,sys_log_content,create_time,sign)
+		VALUES(#{sys_sl_id},#{sys_sa_id},#{sys_log_content},NOW(),#{sign})
+	</insert>
+</mapper>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>角色管理</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="Amee" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/ace.min.css" />
+    <link rel="stylesheet" href="../css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <!--[if IE 7]>
+	<link rel="stylesheet" href="../css/font-awesome-ie7.min.css"/>
+	<![endif]-->
+    <!--[if lte IE 8]>
+	<link rel="stylesheet" href="../css/ace-ie.min.css"/>
+	<![endif]-->
+    <!--[if lt IE 9]>
+	<script src="../js/html5shiv.js"></script>
+	<script src="../js/respond.min.js"></script>
+	<![endif]-->
+    <script src="../js/ace-extra.min.js"></script>
+</head>
+
+<body class="skin-3 bg-fff scrolling">
+    <div class="breadcrumbs " id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                首页
+            </li>
+            <li>
+                权限
+            </li>
+            <li>
+                角色管理
+            </li>
+        </ul>
+        <div class="btn-group pull-right mt-5">
+            <a href="#modal" role="button" data-toggle="modal" data-sign="1" class="btn btn-sm btn-primary" onclick="clickbtnGet(this)" >
+                新增
+            </a>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-sm-12 w100">
+                <div class="table-responsive">
+                    <table id="table" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>角色名称</th>
+                                <th>权限</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         <#list listRole as role>
+							 <tr>
+							 	
+                                <td>${role_index+1}</td>
+                                <td>${role.sys_sr_name}</td>
+                                <td>${role.sys_sm_name}</td>
+                                <td>
+                                    <a href="#modal" role="button" data-id="${role.sys_sr_id}" data-sign="0"  data-name="${role.sys_sr_name}" data-toggle="modal" class="btn btn-xs btn-success" onclick="clickbtnGet(this)">
+                                        修改</a>
+                                    <button class="btn btn-xs btn-danger"   value="${role.sys_sr_id}" onclick="clickbtnDelete(this.value)">
+                                        删除</button>
+                                </td>
+                            </tr>
+						</#list> 
+                        
+                         
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <div id="modal" class="modal fade">
+        <div class="modal-dialog " style="width: 80%" style="margin-top: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span>&times;</span>
+                        </button>
+                        添加角色
+                    </div>
+                </div>
+                <input type="hidden" id="sr_id" value=""/>
+                <div class="modal-body ">
+                    <div class="row mt-10 form-horizontal ">
+                        <div class="form-group col-xs-12">
+                            <label class="col-sm-3 control-label no-padding-right">角色名称</label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="" class="input-large" name=""  id="sys_sr_name"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label class="col-sm-3 control-label no-padding-right">选择权限</label>
+                            <div class="col-sm-9 checkbox-wrap" >
+                                 <label>
+                                    <input id="all-checkbox" name="all-checkbox" type="checkbox" class="ace" value="全部" />
+                                    <span class="lbl">全部</span>
+                                </label>
+                                 
+                               
+                               
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer no-margin-top">
+                        <div class="col-sm-12 center" id="choice">
+                            <button class="btn btn-xs btn-success"  onclick="clickbtnSave()">
+                                确定
+                            </button>
+                            <button class="btn btn-xs btn-danger" data-dismiss="modal">取消
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <script src="../js/jquery-2.0.3.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+       <script type="text/javascript">
+        	$(function(){
+        		var checkbox = $("[name='form-field-checkbox']");
+                $("#all-checkbox").click(function () {
+                	var checkbox = $("[name='form-field-checkbox']");
+					if ($(this).prop("checked")) {
+						checkbox.prop("checked", true)
+					} else {
+						checkbox.prop("checked", false)
+					}
+				})
+						
+						
+				checkbox.each(function () {
+					$(this).click(function () {
+						checkbox.each(function () {
+							if ($(this).prop("checked") === false) {
+								$("#all-checkbox").prop("checked", false)
+							}
+						})
+					});
+				})
+        	})
+        	
+        	
+        	function clickbtnGet(btn){	
+        		var btn = $(btn);
+        		var id= btn.data('id');
+        		var name = btn.data('name');
+        		var sign = btn.data('sign');
+        	       		
+        		 $.ajax({
+                    url:"/supermarket/back/permissions/find_allMenu",
+                    type:"POST",
+                    dataType:"json",
+                    async:false,
+	                success:function(data){
+	                	console.log("data >> "+data)
+	                	var me=data.menu; 
+	                	console.log(me);
+	                	
+	                	 $('.checkbox-wrap label').first().siblings().remove(); 
+	                	
+	                	
+	                	var Li ="";
+	                	
+	                	for(i=0;i<me.length;i++){  
+	                           Li +='<label>';
+                               Li+='<input id="check" name="form-field-checkbox" type="checkbox" class="ace" value='+me[i].sys_sm_id+' />';
+                               Li+='<span class="lbl">'+me[i].sys_sm_name+'</span>';
+                           	   Li+='</label>';
+	                	} 
+                         $('.col-sm-9.checkbox-wrap').append(Li);  
+	                	console.log(Li);
+	                }
+              	}); 
+        		 
+        		 if(sign=="0"){
+ 	      			$.ajax({
+                        url:"/supermarket/back/permissions/find_powerByid",
+                        type:"POST",
+                        dataType:"json",
+                        data:{sys_sr_id:id},
+    	                   success:function(data){
+ 	   	                	var listpowe = data.list;
+ 	   	                	for (var i = 0; i < listpowe.length; i++) {
+ 	   	                		$("input[value='"+listpowe[i].sys_sm_id+"']").attr("checked",true);
+ 							}
+ 	   	         	   }
+ 	      			})
+         			$('.table-header').html("修改角色");
+         			$("#sys_sr_name").val(name);
+         			$("#sr_id").val(id);
+         			
+                          
+         		}else{
+         			$('.table-header').html("添加角色");
+         			$("#sys_sr_name").val("");
+         			
+         		}
+        	}
+        	
+
+        	 function clickbtnSave(){
+        		var sys_sr_name = $("#sys_sr_name").val();
+        		var sr_id = $("#sr_id").val();
+        		if(sys_sr_name =="" || sys_sr_name==null){
+        			alert("角色名不能为空");
+        			return false;
+        		}
+        		var student = $("input[name='form-field-checkbox']:checked").serialize(); 
+        		if(student =="" || student==null){
+        			alert("请选择权限");
+        			return false;
+        		}
+        		var strgetSelectValue="";  
+        		var getSelectValueMenbers = $("input[name='form-field-checkbox']:checked").each(function(j) {  
+        		  
+        		    if (j >= 0) {  
+        		        strgetSelectValue += $(this).val() + ","  
+        		    }  
+        		});
+        		
+        		$.ajax({
+                    url:"/supermarket/back/permissions/saveUpdate_role",
+                    type:"POST",
+                    data:{sys_sr_name:sys_sr_name,strgetSelectValue:strgetSelectValue,sr_id:sr_id},
+                    dataType:"json",
+	                success:function(data){
+	                	window.location.reload();
+	                }
+        		});
+        	} 
+        	 
+        	function clickbtnDelete(sys_sr_id){	
+        	
+        		$.ajax({
+                    url:"/supermarket/back/permissions/del_rolePower",
+                    type:"POST",
+                    data:{sys_sr_id:sys_sr_id},
+                    dataType:"json",
+	                success:function(data){
+	                	window.location.reload();
+	                }
+        		}) 
+        	}
+        	
+        	
+        	
+			
+        	
+                        	
+        </script>
+</body>
+
+</html>

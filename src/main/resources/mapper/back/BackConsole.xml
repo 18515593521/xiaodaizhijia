@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BackConsole">
+	<!-- 统计注册量 -->
+	<select id="register_total" resultType="int">
+		SELECT COUNT(user_id) FROM user_userinfos 
+	</select>
+	
+	<!-- 统计昨日注册量 -->
+	<select id="yesterday_registernum" resultType="int">
+		SELECT COUNT(user_id) FROM user_userinfos WHERE DATE(create_time) = DATE(date_sub(NOW(),interval 1 day))
+	</select>
+	<!-- 统计今日注册量 -->
+	<select id="today_registernum" resultType="int">
+		SELECT COUNT(user_id) FROM user_userinfos WHERE DATE(create_time) = DATE(NOW())
+	</select>
+	
+	<!-- 统计活跃用户量 -->
+	<select id="find_loginlog" resultType="int">
+		SELECT COUNT(id) FROM login_log
+	</select>
+	
+	<!-- 统计昨日活跃用户量 -->
+	<select id="find_yesterdayloginlog" resultType="int">
+		SELECT COUNT(id) FROM login_log WHERE DATE(login_time) = DATE(date_sub(NOW(),interval 1 day))
+	</select>
+	
+	<!-- 统计今日活跃用户量 -->
+	<select id="find_todayloginlog" resultType="int">
+		SELECT COUNT(id) FROM login_log WHERE DATE(login_time) = DATE(NOW())
+	</select>
+	
+	
+	<!-- 统计产品合计数 -->
+	<select id="find_comtotalnum" resultType="int">
+		SELECT COUNT(com_id) FROM commodity WHERE isdisplay=0
+	</select>
+	
+	<!-- 统计在线产品合计数 -->
+	<select id="find_comnum" resultType="int">
+		SELECT COUNT(com_id) FROM commodity WHERE isdisplay=0 and state=0
+	</select>
+	
+	
+	<!-- 统计总算量，总金额 -->
+	<select id="find_settlement" resultType="map">
+		SELECT IFNULL(SUM(apply_number),0) settlement_num,IFNULL(SUM(settlement_price),0) settlement_money FROM commodity_settlement
+	</select>
+	
+	<!-- 统计昨日总算量，总金额 -->
+	<select id="find_ydsettlement" resultType="map">
+		SELECT IFNULL(SUM(apply_number),0) settlement_ydnum,IFNULL(SUM(settlement_price),0) settlement_ydmoney FROM commodity_settlement WHERE DATE(settlement_time) = DATE(date_sub(NOW(),interval 1 day))
+	</select>
+	<!-- 未结算量 ，未结算金 -->
+	<select id="find_Unsettled" resultType="map">
+		SELECT IFNULL(SUM(apply_number),0) Unsettled_num,IFNULL(SUM(settlement_price),0) Unsettled_money
+		FROM commodity_settlement WHERE state =0
+	</select>
+	
+	
+	<select id="find_UserRegister" resultType="map">
+		SELECT COUNT(user_id) register_num,DATE(create_time) create_time,
+		IFNULL((SELECT COUNT(id) num2 FROM login_log WHERE DATE(login_time)=DATE(create_time)),0) login_num
+		FROM user_userinfos GROUP BY DATE(create_time)
+	</select>
+	
+	<select id="find_UserSettlement" resultType="map">		
+		SELECT SUM(apply_number) apply_number,SUM(settlement_price) settlement_price,DATE(settlement_time) settlement_time
+		FROM commodity_settlement GROUP BY DATE(settlement_time)
+	</select>
+
+</mapper>

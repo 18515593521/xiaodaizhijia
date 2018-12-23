@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backAdministrators">
+	<sql id="admin">
+		sys_admin.sys_sa_id,
+		sys_admin.sys_sa_loginname,
+		sys_admin.sys_sa_password,
+		sys_admin.sys_sa_name,
+		sys_admin.sys_sa_phone,
+		sys_admin.sys_sa_email,
+		sys_admin.sys_sr_id,
+		sys_admin.create_time,
+		sys_admin.remarks
+	</sql>
+	
+	<sql id="adm">
+		sys_admin.sys_sa_id,
+		sys_admin.sys_sa_loginname,
+		sys_admin.sys_sa_name,
+		sys_admin.sys_sa_phone,
+		sys_admin.sys_sa_email,
+		sys_admin.sys_sr_id,
+		sys_admin.create_time,
+		sys_admin.remarks
+	</sql>
+	
+	<sql id="role">
+		sys_role.sys_sr_id,
+		sys_role.sys_sr_name
+	</sql>
+	
+	<!-- 查询所有角色 -->
+	<select id="find_role" resultType="map">
+		SELECT <include refid="role"></include> from sys_role WHERE state=0
+	</select>
+	
+	<!-- 添加管理员 -->
+	<insert id="save_admin" parameterType="map">
+		insert into sys_admin(sys_sa_id,sys_sa_loginname,sys_sa_password,sys_sa_name,sys_sa_phone,sys_sr_id,create_time) 
+		VALUES(#{sys_sa_id},#{sys_sa_loginname},#{sys_sa_password},#{sys_sa_name},#{sys_sa_phone},#{sys_sr_id},NOW())
+	</insert>
+	
+	<!-- 查询全部管理员信息 -->
+	<select id="find_admin" resultType="map" parameterType="java.lang.String">	
+		SELECT a.*,r.sys_sr_name from sys_admin a 
+		LEFT JOIN sys_role r ON a.sys_sr_id=r.sys_sr_id
+		WHERE a.state=0 
+		<if test="_parameter !=null and _parameter !=''">
+			and a.sys_sa_name LIKE CONCAT('%',#{sys_sa_name},'%') 
+		</if>
+	</select>
+	
+	<!-- 删除管理员 修改状态为1-->
+	<update id="del_admin" parameterType="java.lang.String">
+		update sys_admin SET sys_admin.state=1 where sys_admin.sys_sa_id = #{sys_sa_id}
+	</update>
+	
+ 	<!-- <delete id="del_admin" parameterType="java.lang.String">
+		DELETE FROM sys_admin WHERE sys_sa_id = #{sys_sa_id}
+	</delete> -->
+	<update id="update_admin" parameterType="map">
+		update sys_admin SET sys_sa_loginname=#{sys_sa_loginname},sys_sa_name=#{sys_sa_name},sys_sa_phone=#{sys_sa_phone},sys_sa_password=#{sys_sa_password},sys_sr_id=#{sys_sr_id},create_time=NOW() 
+		where sys_sa_id=#{sys_sa_id}
+	</update>
+	
+	<!-- 根据账号密码查询 用于登录 -->
+	<select id="select_admin" parameterType="map" resultType="map">
+		SELECT <include refid="adm"></include> from sys_admin 
+		where sys_admin.sys_sa_loginname = #{sys_sa_loginname} AND sys_admin.sys_sa_password = #{sys_sa_password}
+	</select>
+	
+	<!-- 根据id查询权限 -->
+	<select id="find_loginpower" parameterType="java.lang.String" resultType="map">
+		select sys_power.sys_sr_id sys_sr_id,sys_sr_name,group_concat(sys_sm_name) sys_sm_name from sys_power 
+		LEFT JOIN sys_menu on sys_menu.sys_sm_id = sys_power.sys_sm_id
+		LEFT JOIN sys_role on sys_role.sys_sr_id = sys_power.sys_sr_id
+		where sys_role.sys_sr_id = #{sys_sr_id}
+		GROUP BY sys_sr_name
+	</select>
+	
+</mapper>

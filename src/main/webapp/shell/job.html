@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="Author" content="Amee" />
+	<meta name="Keywords" content="开心花" />
+	<meta name="Description" content="低利率，快速高效，下款快" />
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="../lib/iosSelect.css">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="../lib/layer.css">
+	<script src="../js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript">
+		(function (doc, win) {
+			var docEl = doc.documentElement,
+				resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+				recalc = function () {
+					var clientWidth = docEl.clientWidth;
+					if (!clientWidth) return;
+					docEl.style.fontSize = clientWidth / 7.5 + 'px';
+				};
+			if (!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener('DOMContentLoaded', recalc, false);
+		})(document, window);
+	</script>
+	<title>工作信息</title>
+</head>
+
+<body>
+	<div class="info">
+		<ul class="items">
+			<li>
+				<div>职业</div>
+				<div>
+					<div class="arrow">
+						<input type="hidden" name="bank_id" id="bankId" value="">
+						<span id="showBank">请选择...</span>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div>单位名称</div>
+				<div>
+					<input type="text" placeholder="请填写..." id="work_company">
+				</div>
+			</li>
+			<li>
+				<div>担任职务</div>
+				<div>
+					<input type="text" placeholder="请填写..." id="work_duties">
+				</div>
+			</li>
+			<li>
+				<div>居住地址</div>
+				<div>
+					<input type="text" placeholder="请填写..." id="livingPlace">
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<p class="tips">
+		注：提交即代表同意<a href="xy.html">《服务与隐私协议》</a></a>
+	</p>
+	<a class="submit" href="javascript:;" id="btn_submit" lang="false">提交</a>
+
+	<script src="../lib/iosSelect.js"></script>
+	<script>
+		var data = [{
+				'id': '10001',
+				'value': '程序员'
+			},
+			{
+				'id': '10002',
+				'value': '设计师'
+			},
+			{
+				'id': '10003',
+				'value': '教师'
+			},
+			{
+				'id': '10004',
+				'value': '服务员'
+			},
+			{
+				'id': '10005',
+				'value': '司机'
+			},
+			{
+				'id': '10006',
+				'value': '理发师'
+			},
+			{
+				'id': '10007',
+				'value': '教练'
+			},
+			{
+				'id': '10008',
+				'value': '文员'
+			},
+
+			{
+				'id': '10009',
+				'value': '销售经理'
+			},
+			{
+				'id': '10010',
+				'value': '营业员'
+			},
+			{
+				'id': '10011',
+				'value': '维修工'
+			},
+			{
+				'id': '10012',
+				'value': '快递员'
+			},
+			{
+				'id': '10013',
+				'value': '律师'
+			},
+			{
+				'id': '10014',
+				'value': '翻译'
+			},
+			{
+				'id': '10015',
+				'value': '编辑'
+			},
+			{
+				'id': '10016',
+				'value': '会计'
+			}
+		];
+	</script>
+	<script src="../js/jquery-2.0.3.min.js"></script>
+	<script src="../lib/layer.js"></script>
+	<script type="text/javascript">
+		var showBankDom = document.querySelector('#showBank');
+		var bankIdDom = document.querySelector('#bankId');
+		showBankDom.addEventListener('click', function () {
+			var bankId = showBankDom.dataset['id'];
+			var bankName = showBankDom.dataset['value'];
+
+			var bankSelect = new IosSelect(1, [data], {
+				container: '.container',
+				title: '银行卡选择',
+				itemHeight: 50,
+				itemShowCount: 3,
+				oneLevelId: bankId,
+				callback: function (selectOneObj) {
+					bankIdDom.value = selectOneObj.id;
+					showBankDom.innerHTML = selectOneObj.value;
+					showBankDom.dataset['id'] = selectOneObj.id;
+					showBankDom.dataset['value'] = selectOneObj.value;
+				}
+			});
+		});
+
+		$(".submit").click(function () {
+			debugger;
+			var html;
+			var bankId = $("#bankId").val();
+			var work_company = $("#work_company").val();
+			var work_duties = $("#work_duties").val();
+			var livingPlace = $("#livingPlace").val();
+			if (bankId == null || bankId == "") {
+				layer.open({
+					content: "请选择职业！",
+					skin: 'msg',
+					time: 2 //2秒后自动关闭
+				});
+				
+			} else if (work_company == null || work_company == '') {
+				layer.open({
+					content: "请输入单位名称！",
+					skin: 'msg',
+					time: 2 //2秒后自动关闭
+				});
+	
+			} else if (work_duties == null || work_duties == '') {
+				layer.open({
+					content: "请输入担任职务！",
+					skin: 'msg',
+					time: 2 //2秒后自动关闭
+				});
+				
+			} else if (livingPlace == null || livingPlace == '') {
+				layer.open({
+					content: "请输入居住地址！",
+					skin: 'msg',
+					time: 2 //2秒后自动关闭
+				});
+				
+			} else {
+				layer.open({
+					content: "请继续填写银行卡信息！",
+					btn: '好的',
+					yes: function (index) {
+						layer.close(index)
+						window.location.href = './bank.html'
+					}
+				});
+			}
+			
+
+		})
+
+		function win(html) {
+			console.log(html);
+
+			// html = "请填写银行卡信息" || html
+			// layer.open({
+			// 	type: 1,
+			// 	content: html,
+			// 	btn: '好的',
+			// 	yes: function (index) {
+			// 		layer.close(index)
+			// 		// window.location.href = './bank.html'
+			// 	}
+			// });
+		}
+	</script>
+</body>
+
+</html>

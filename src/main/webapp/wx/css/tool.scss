@@ -1,0 +1,64 @@
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+@mixin radius($value) {
+    border-radius: $value;
+}
+$bg-mian:#f0f0f0;
+.bg-mian {
+    background-color: $bg-mian;
+}
+.bg_pink{
+    background-color: pink;
+}
+.bd-top {
+    border-top: .01rem solid #eee;
+}
+
+.bd-bottom {
+    border-bottom: .01rem solid #ddd;
+}
+
+
+
+.footer-content {
+    padding-bottom: 2rem;
+    height: auto;
+}
+
+.flex-row-between {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-row-start {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.flex-row-around {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flex-column-around {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}

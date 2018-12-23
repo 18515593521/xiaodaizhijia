@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BackUser">
+	<sql id="user">
+		user_userinfos.user_id,
+		user_userinfos.user_phone,
+		user_userinfos.user_password,
+		user_userinfos.user_name,
+		user_userinfos.user_head_picture,
+		user_userinfos.device_token,
+		user_userinfos.device_model,
+		user_userinfos.user_source,
+		user_userinfos.create_time,
+		user_userinfos.remarks
+	</sql>
+	
+	<select id="find_user" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">	
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					user_userinfos.user_id,
+					user_userinfos.user_phone,
+					user_userinfos.user_name,
+					user_userinfos.device_model,
+					user_userinfos.create_time,
+					user_userinfos.user_source,		
+					user_userinfos.appN_V,
+					(
+						SELECT
+							login_time
+						FROM
+							login_log ll
+						WHERE
+							ll.ul_id = user_userinfos.user_id
+						ORDER BY
+							login_time DESC
+						LIMIT 1
+					) login_time
+				FROM
+					user_userinfos
+			) userinfo
+		<where>
+			<if test="user_name!=null and user_name!=''">
+				userinfo.user_name=#{user_name}
+			</if>
+			<if test="user_phone!=null and user_phone!=''">
+				and userinfo.user_phone=#{user_phone}
+			</if>
+			<if test="name_list==0">
+				and name_list != 1 OR name_list is NULL			
+			</if>
+			<if test="name_list==1">
+				and name_list=#{name_list}
+			</if>
+			<if test="startTime != null and startTime != '' and endtTime != null and endtTime != ''">
+				and create_time &lt;= #{endtTime} and create_time &gt;=#{startTime}
+			</if>
+			<if test="login == 1">
+				and login_time IS NOT NULL and login_time != ''								
+			</if>
+			<if test="login == 2">
+				and (login_time IS NULL OR login_time = '')								
+			</if>
+			<if test="user_source != null and user_source!=''">
+				and user_source= #{user_source}
+			</if>
+		</where>
+				
+		ORDER BY create_time DESC
+	</select>
+	
+	<!-- 查询所有用户手机号 -->
+	<select id="find_phone" resultType="map">		
+		SELECT user_phone FROM user_userinfos
+	</select>
+</mapper>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0"
+	/>
+	<meta name="format-detection" content="telephone=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="Author" content="Amee" />
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="../lib/la">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="../lib/layer.css">
+	<script type="text/javascript">
+		! function (t) {
+			var e = 750,
+				i = t.document,
+				n = i.documentElement,
+				o = "orientationchange" in t ? "orientationchange" : "resize",
+				a = function t() {
+					var i = n.getBoundingClientRect().width;
+					return n.style.fontSize = 5 * Math.max(Math.min(i / e * 20, 11.2), 8.55) + "px", t
+				}();
+			n.setAttribute("data-dpr", t.navigator.appVersion.match(/iphone/gi) ? t.devicePixelRatio : 1), /iP(hone|od|ad)/.test(
+				t.navigator.userAgent) && (i.documentElement.classList.add("ios"), parseInt(t.navigator.appVersion.match(
+				/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8 && i.documentElement.classList.add("hairline")), i.addEventListener && (t.addEventListener(
+				o, a, !1), i.addEventListener("DOMContentLoaded", a, !1))
+		}(window);
+	</script>
+	<title>立即借款</title>
+</head>
+
+<body class="loan">
+	<div class="limit bg_main">
+		<p class="warning" id="red">请务必按时还款，逾期将上报人行征信</p>
+		<p>可借额度</p>
+		<p class="bold">￥
+			<span id="total_amount">500-20000</span>
+		</p>
+	</div>
+	<div class="info no-mt">
+		<p>请选择借款金额</p>
+		<div class="loan-number flex-row">
+			<div money="600" class="active">￥600</div>
+			<div money="950">￥1000</div>
+			<div money="1120">￥1120</div>
+			<div money="2000">￥2000</div>
+			<div money="5000">￥5000</div>
+			<div money="8000">￥8000</div>
+			<!-- <div money="10000">￥10000</div> -->
+		</div>
+	</div>
+	<div class="info">
+		<p>请选择借款期限</p>
+		<div id="days" class="loan-date flex-row">
+			<div class="active" day="7" class="disabled">7天</div>
+			<div day="14">14天</div>
+			<div day="28">28天</div>
+		</div>
+	</div>
+	<div class="flex-row info back">
+		<div>到期应还</div>
+		<div class="color_mian ">￥
+			<span id="should_money"></span>
+		</div>
+	</div>
+	<p class="warning2  color_money" id="red">注：禁止学生借款</p>
+	<a href="javascript:;" id="confirm" class="submit bg_main">
+		确认借款
+	</a>
+</body>
+<script src="../js/jquery-2.0.3.min.js"></script>
+<script src="../lib/layer.js">
+</script>
+<script type="text/javascript">
+	$(".loan-number div").click(function () {
+		$(this).addClass("active").siblings().removeClass("active")
+	})
+	$(".loan-date div").click(function () {
+		$(this).addClass("active").siblings().removeClass("active")
+	})
+	$("#confirm").click(function () {
+		layer.open({
+			content: '请先完成认证',
+			btn: '好的',
+			yes: function (index) {
+				layer.close(index)
+				window.location.href='./job.html'
+			}
+		});
+	})
+</script>
+
+</html>

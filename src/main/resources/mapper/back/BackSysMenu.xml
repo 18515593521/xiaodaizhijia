@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BackSysMenu">
+
+	<sql id="sysMenu">
+		sys_menu.sys_sm_id,
+		sys_menu.sys_sm_name,
+		sys_menu.sys_sm_url
+	</sql>
+	<!--查询全部菜单 -->
+	<select id="find_allMenu" resultType="map">
+		SELECT 
+			<include refid="sysMenu"></include>
+		FROM 
+		sys_menu
+	</select>
+	
+	<!-- 添加角色 -->
+	 <insert id="save_role" parameterType="map">
+		insert into sys_role values(#{sys_sr_id},#{sys_sr_name},0)
+	</insert>
+	
+	<!--添加角色权限  -->
+	 <insert id="save_sys_power" parameterType="map">
+			insert into sys_power values(#{sys_sp_id},#{sys_sr_id},#{sys_sm_id})
+	</insert> 
+ 	<!-- 查询角色限权 -->
+ 	<select id="find_allrRolePower" resultType="map">
+ 		select sys_power.sys_sr_id sys_sr_id,sys_sr_name,group_concat(sys_sm_name) sys_sm_name from sys_power 
+		LEFT JOIN sys_menu on sys_menu.sys_sm_id = sys_power.sys_sm_id
+		LEFT JOIN sys_role on sys_role.sys_sr_id = sys_power.sys_sr_id
+		WHERE sys_role.state=0
+		GROUP BY sys_sr_name
+		
+ 	</select>
+ 	
+ 	<!-- 删除系统权限 -->
+ 	<delete id="del_power" parameterType="java.lang.String">
+		DELETE FROM sys_power WHERE sys_sr_id = #{sys_sr_id}
+	</delete>
+ 	
+ 	
+ 	<delete id="del_role" parameterType="java.lang.String">
+		DELETE FROM sys_role WHERE sys_sr_id = #{sys_sr_id}
+	</delete>
+	
+	<update id="update_role"  parameterType="map">
+		UPDATE sys_role SET sys_sr_name=#{sys_sr_name} where sys_sr_id=#{sys_sr_id}
+	</update>
+	
+	<!-- 根据角色id查询权限 -->
+	<select id="find_powerByid" resultType="map" parameterType="java.lang.String">
+		SELECT sys_sm_id from sys_power where sys_sr_id=#{sys_sr_id}
+	</select>
+	
+	<!-- 删除角色 -->
+	<update id="up_state"  parameterType="java.lang.String">
+		UPDATE sys_role SET state=1 where sys_sr_id=#{sys_sr_id}
+	</update>
+	
+</mapper>

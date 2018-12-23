@@ -1,0 +1,270 @@
+.tip {
+  color: #999;
+}
+
+.tips {
+  padding: .3rem;
+}
+
+.tips a {
+  color: #4c9cfe;
+}
+
+.flex-row {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+  flex-direction: row | row-reverse | column | column-reverse;
+  flex-wrap: nowrap | wrap | wrap-reverse;
+  justify-content: flex-start | flex-end | center | space-between | space-around;
+  align-items: flex-start | flex-end | center | baseline | stretch; 
+  */
+.submit {
+  display: block;
+  width: 3.5rem;
+  height: .8rem;
+  margin: .5rem auto;
+  line-height: .8rem;
+  text-align: center;
+  background-color: #4c9cfe;
+  font-size: .3rem;
+  color: #fff;
+  border-radius: 1rem;
+}
+
+.tit {
+  background-color: #f2f2f2;
+  padding: .2rem 0 0 .3rem;
+  color: #999;
+}
+
+.info {
+  margin-top: .2rem;
+  background-color: #fff;
+}
+
+.info .items li {
+  height: .8rem;
+  margin-left: .2rem;
+  padding: 0 .2rem;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: .02rem solid #e5e5e5;
+}
+
+.info .items li.noboder {
+  border: none;
+}
+
+.info .items li div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.info .items li div:first-child {
+  width: 30%;
+}
+
+.info .items li div:last-child {
+  justify-content: flex-end;
+  width: 70%;
+  align-self: right;
+}
+
+.info .items li div:last-child p {
+  padding-right: .25rem;
+  background: url("../images/img/arrow.png") no-repeat right center/0.18rem;
+}
+
+.info .items li div input {
+  text-align: right;
+}
+
+.info .items li input.addr {
+  height: 80%;
+  width: 100%;
+}
+
+.bg {
+  background: #fff;
+  margin-top: .2rem;
+  padding: .1rem;
+}
+
+.bg .half {
+  position: relative;
+  margin: .1rem;
+  width: 50%;
+  height: 2.5rem;
+}
+
+.bg .half label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+
+.bg .half input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.bg .half img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 88;
+}
+
+.phone .img {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 4rem auto;
+}
+
+.down p {
+  margin: 1rem .5rem;
+  text-indent: 2em;
+  color: #4c9cfe;
+}
+
+.down .img {
+  margin: 1rem auto 2rem;
+}
+
+.payback .img {
+  width: 3rem;
+  margin: 3rem auto .5rem;
+}
+
+.payback .img img {
+  border-radius: 50%;
+}
+
+.payback .submit {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.payback .payback-time {
+  width: 80%;
+  margin: 0 auto;
+  color: #999;
+}
+
+.loan .limit {
+  height: 1.6rem;
+  background-color: #4c9cfe;
+  color: #fff;
+  padding: .5rem 0 1.5rem;
+}
+
+.loan .limit p {
+  text-align: center;
+}
+
+.loan .limit p.warning {
+  margin-bottom: .8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.loan .limit p.bold {
+  font-size: .8rem;
+}
+
+.loan .info {
+  padding: .2rem .3rem;
+}
+
+.loan .info p {
+  border-bottom: .01rem solid #f2f2f2;
+  padding-bottom: .2rem;
+}
+
+.loan .info .flex-row {
+  margin-top: .3rem;
+  flex-wrap: wrap;
+}
+
+.loan .info .flex-row div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: .1rem;
+  width: 28%;
+  height: .6rem;
+  color: #888;
+  border: .02rem solid #CDC8BD;
+  border-radius: 1rem;
+}
+
+.loan .info .flex-row div.active {
+  border-color: #4c9cfe;
+  color: #4c9cfe;
+}
+
+.loan .info .flex-row div.disabled {
+  border-color: #e4e4e4;
+  background-color: #e4e4e4;
+  color: #fff;
+}
+
+.loan .info.no-mt {
+  margin-top: 0;
+}
+
+.loan .back {
+  justify-content: space-between;
+}
+
+.loan .back .color {
+  color: #4c9cfe;
+  font-size: .35rem;
+}
+
+.loan .submit {
+  margin: .1rem auto;
+}
+
+.warning2 {
+  width: 100%;
+  text-align: center;
+  margin-top: .2rem;
+  color: #4c9cfe;
+}
+
+.xy {
+  padding: .2rem;
+}
+
+.xy h1 {
+  font-size: .5rem;
+  margin: .5rem 0;
+  text-align: center;
+}
+
+.xy p {
+  text-indent: .5rem;
+  color: #555;
+}
+
+.xy .tit {
+  font-size: .35rem;
+  margin: .2rem 0;
+  font-weight: bold;
+  color: #333;
+}

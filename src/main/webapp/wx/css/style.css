@@ -1,0 +1,99 @@
+.bg-mian {
+  background-color: #f0f0f0;
+}
+
+.bg_pink {
+  background-color: pink;
+}
+
+.bd-top {
+  border-top: .01rem solid #eee;
+}
+
+.bd-bottom, .register .input .row {
+  border-bottom: .01rem solid #999;
+}
+
+.flex-row-between {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-row-start {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-row-around, .register .input .tip {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.register .logo {
+  width: 100%;
+  margin: .8rem 0;
+  text-align: center;
+}
+
+.register .logo img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.register .input {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.register .input .row {
+  height: 1rem;
+  background: url("../images/img/user.png") no-repeat 0.5rem center/0.48rem 0.52rem;
+  padding-left: 1.2rem;
+}
+
+.register .input .row input {
+  height: 96%;
+  background-color: transparent;
+}
+
+.register .input .row input.codes {
+  width: 50%;
+}
+
+.register .input .row input#getting {
+  width: 40%;
+}
+
+.register .input .row.passward {
+  background-image: url("../images/img/passward.png");
+}
+
+.register .input .row.code {
+  background-image: url("../images/img/code.png");
+}
+
+.register .input .btn {
+  margin: .5rem auto .2rem;
+  width: 80%;
+  height: 1rem;
+  line-height: 1rem;
+  color: #fff;
+  background: url("../images/img/btn.png") 0/cover;
+  text-align: center;
+}
+
+.register .input .tip a {
+  color: cornflowerblue;
+}

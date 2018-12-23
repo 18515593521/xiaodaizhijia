@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backCommodity">
+	<sql id="commodity">
+		commodity.com_id,
+		commodity.backstage_admin,
+		commodity.com_name,
+		commodity.com_price,
+		commodity.state,
+		commodity.com_sort,
+		commodity.backstage_password,
+		commodity.applications_number,
+		commodity.settlement,
+		DATE(commodity.create_time) create_time
+	</sql>
+	
+	<sql id="com">
+		commodity.com_id,
+		commodity.ci_id,
+		commodity.com_name,
+		commodity.com_price,
+		commodity.fastest_lending_time,
+		commodity.com_explain,
+		commodity.com_quota,
+		commodity.com_star,
+		commodity.applications_number,
+		commodity.website_url,
+		commodity.com_sort,
+		commodity.loan_amount,
+		commodity.everyday_interest,
+		commodity.com_interest,
+		commodity.term_scope,
+		commodity.repayment_method,
+		commodity.com_condition,
+		commodity.required_materials,
+		commodity.right_method,
+		commodity.audit_certificatio,
+		commodity.repayment_statemen,
+		commodity.backstage_url,
+		commodity.backstage_admin,
+		commodity.backstage_password,
+		commodity.com_logo,
+		commodity.state,
+		commodity.characteris_dic_id,
+		commodity.create_time,
+		commodity.remarks,
+		commodity.settlement,
+		commodity.lable_dic_id
+	</sql>
+	
+	<!-- 分页查询 -->
+	<select id="find_commodity" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">
+		 select (SELECT COUNT(user_footprint.uf_id) FROM user_footprint where user_footprint.com_id=commodity.com_id) num1,
+		 (SELECT COUNT(user_footprint.uf_id) FROM user_footprint 
+		 where user_footprint.com_id=commodity.com_id AND DATE(user_footprint.create_time) = DATE(NOW())) num2,
+		 	  <include refid="commodity"></include>,
+ 			  company_informatio.ci_name
+ 		 from commodity
+		 	  LEFT JOIN company_informatio ON company_informatio.ci_id = commodity.ci_id
+		 		where isdisplay = 0
+		<if test="com_name!=null and com_name!=''">
+	          and commodity.com_name=#{com_name}
+	    </if>
+	    <if test="ci_name!=null and ci_name!=''">
+	          and company_informatio.ci_name=#{ci_name}
+	    </if>
+	  
+	    ORDER BY commodity.state,commodity.create_time DESC
+	</select>
+	
+	<!-- 查询所有公司名称 -->
+	<select id="find_company" resultType="map">
+		SELECT company_informatio.ci_id,company_informatio.ci_name from company_informatio
+	</select>
+	
+	<!-- 根据id查询商品信息 -->
+	<select id="find_ByIdCommodity" resultType="map" parameterType="java.lang.String">
+		SELECT <include refid="com"></include> from commodity where com_id = #{com_id}
+	</select>
+	
+	<insert id="save_commodity" parameterType="map">
+		INSERT INTO commodity(com_id,ci_id,com_name,com_price,fastest_lending_time,
+						com_explain,com_quota,applications_number,website_url,com_sort,
+						com_interest,term_scope,repayment_method,com_condition,required_materials,
+						audit_certificatio,repayment_statemen,backstage_url,backstage_admin,
+						backstage_password,right_method,com_star,characteris_dic_id,com_logo,lable_dic_id,settlement,create_time)
+		VALUES(#{com_id},#{ci_id},#{com_name},#{com_price},#{fastest_lending_time},#{com_explain},#{com_quota},
+		#{applications_number},#{website_url},#{com_sort},#{com_interest},#{term_scope},#{repayment_method},#{com_condition}
+		,#{required_materials},#{audit_certificatio},#{repayment_statemen},#{backstage_url},#{backstage_admin},
+		#{backstage_password},#{right_method},#{com_star},#{characteris_dic_id},#{com_logo},#{lable_dic_id},#{settlement},NOW())
+	</insert>
+	
+	<update id="update_commodity" parameterType="map" >	
+		UPDATE commodity SET ci_id=#{ci_id},com_name=#{com_name},com_price=#{com_price},fastest_lending_time=#{fastest_lending_time},
+								com_explain=#{com_explain},com_quota=#{com_quota},applications_number=#{applications_number},website_url=#{website_url},com_sort=#{com_sort},
+								com_interest=#{com_interest},term_scope=#{term_scope},repayment_method=#{repayment_method},com_condition=#{com_condition},required_materials=#{required_materials},
+								audit_certificatio=#{audit_certificatio},repayment_statemen=#{repayment_statemen},backstage_url=#{backstage_url},backstage_admin=#{backstage_admin},
+								backstage_password=#{backstage_password},right_method=#{right_method},com_star=#{com_star},characteris_dic_id=#{characteris_dic_id},lable_dic_id=#{lable_dic_id},settlement=#{settlement}
+								<if test="com_logo != ''">
+								,com_logo=#{com_logo}
+								</if>
+		where com_id=#{com_id}
+	</update>
+	
+	<!-- 上架下架 -->
+	<update id="update_state" parameterType="map">
+		UPDATE commodity SET commodity.state=#{state},commodity.update_time=NOW()
+		where commodity.com_id=#{com_id}
+	</update>
+	
+	
+	<!-- 根据公司id删除商品 -->
+	<update id="del_com" parameterType="java.lang.String">
+		 UPDATE commodity SET isdisplay = 5 WHERE com_id=#{com_id}
+	</update>
+	
+	<!-- 用于产品详情上一页下一页 -->
+	<select id="find_comId" parameterType="map" resultType="map">
+		 select com_id,settlement from commodity
+		 where isdisplay = 0 
+		<if test="com_name!=null and com_name!=''">
+	          and commodity.com_name=#{com_name}
+	    </if>
+	    <if test="ci_name!=null and ci_name!=''">
+	          and company_informatio.ci_name=#{ci_name}
+	    </if>  
+	    ORDER BY commodity.state,commodity.create_time DESC
+	</select>
+	
+</mapper>

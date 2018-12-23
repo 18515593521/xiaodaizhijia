@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shellOrder">
+	<sql id="order">
+		or_id,
+		user_id,
+		com_id,
+		state,
+		create_time,
+		active_time
+	</sql>
+	
+	<sql id="com_order">
+		shell_order.state,
+		shell_order.active_time,
+		shell_commodity.com_name,
+		shell_commodity.phone,
+		shell_commodity.state comstate,
+		shell_commodity.lease_number,
+		shell_commodity.describes
+	</sql>
+	
+	<insert id="save_order" parameterType="map">	
+		INSERT INTO shell_order VALUES(#{or_id},#{user_id},#{com_id},#{state},NOW(),#{active_time})
+	</insert>
+	
+	<select id="find_order" parameterType="java.lang.String" resultType="map">
+		SELECT <include refid="com_order"></include> from shell_order 
+		LEFT JOIN shell_commodity ON shell_order.com_id = shell_commodity.com_id
+		where user_id=#{user_id}
+	</select>
+	<!-- 根据条件查询用户信息 -->
+	<select id="find_orderstate" parameterType="map" resultType="map">
+		SELECT <include refid="order"></include> from shell_order where com_id=#{com_id} and user_id=#{user_id} AND state = 1
+	</select>
+</mapper>

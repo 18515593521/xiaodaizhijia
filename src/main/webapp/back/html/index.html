@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>管理员</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="Amee" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/ace.min.css" />
+    <link rel="stylesheet" href="../css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <!--[if IE 7]>
+	<link rel="stylesheet" href="../css/font-awesome-ie7.min.css"/>
+	<![endif]-->
+    <!--[if lte IE 8]>
+	<link rel="stylesheet" href="../css/ace-ie.min.css"/>
+	<![endif]-->
+    <!--[if lt IE 9]>
+	<script src="../js/html5shiv.js"></script>
+	<script src="../js/respond.min.js"></script>
+	<![endif]-->
+    <script src="../js/ace-extra.min.js"></script>
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body class="skin-3 bg-fff scrolling index">
+    <div class="breadcrumbs " id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                首页
+            </li>
+            <li>
+                控制台
+            </li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row ">
+            <div class="bg">
+                <div class="col-sm-12 total col-xs-12">
+                    <div class="col infobox-green infobox-dark">
+                        <i class="icon-bar-chart"></i>
+                        <div class="data">
+                            <p>用户注册总量</p>
+                            <p>${num2}</p>
+                        </div>
+                    </div>
+                    <div class="col infobox-blue infobox-dark">
+                        <i class="icon-group"></i>
+                        <div class="data">
+                            <p>活跃用户总量</p>
+                            <p>#{find_loginlog}</p>
+                        </div>
+                    </div>
+                     <div class="col infobox-pink infobox-dark">
+                        <i class="icon-credit-card"></i>
+                        <div class="data">
+                            <p>待结算总量</p>
+                            <p>${map3.Unsettled_num}</p>
+                        </div>
+                    </div>
+                    <div class="col infobox-purple2 infobox-dark">
+                        <i class="icon-dashboard"></i>
+                        <div class="data">
+                            <p>待结算总额</p>
+                            <p>${map3.Unsettled_money/100.00}</p>
+                        </div>
+                    </div>
+                    <div class="col  infobox-grey infobox-dark">
+                        <i class="icon-barcode"></i>
+                        <div class="data">
+                            <p>结算总量</p>
+                            <p>${map1.settlement_num}</p>
+                        </div>
+                    </div>
+                    <div class="col infobox-blue2 infobox-dark">
+                        <i class="icon-inbox"></i>
+                        <div class="data">
+                            <p>结算总额</p>
+                            <p>${map1.settlement_money/100.00}</p>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="col-sm-12 daynum mt-20">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="widget-box">
+                            <div class="widget-header widget-header-flat widget-header-small">
+                                <h5>
+                                    <i class="icon-signal"></i>
+                                    昨日数据
+                                </h5>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div class="box">
+                                        <div class="row">
+                                            <p> 昨日注册总量：</p>
+                                            <p>
+                                                <span>${num1}</span>个
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p> 昨日活跃用户量：</p>
+                                            <p>
+                                                <span>#{find_yesterdayloginlog}</span>个
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p> 昨日结算总量：</p>
+                                            <p>
+                                                <span>${map2.settlement_ydnum}</span>个
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p> 昨日结算金额：</p>
+                                            <p>
+                                                <span>${map2.settlement_ydmoney/100.00}</span>元
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="widget-box">
+                            <div class="widget-header widget-header-flat widget-header-small">
+                                <h5>
+                                    <i class="icon-signal"></i>
+                                    今日数据
+                                </h5>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div class="box">
+                                        <div class="row">
+                                            <p> 产品合计数：</p>
+                                            <p>
+                                                <span>${comtotalnum}</span>个
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p> 在线产品：</p>
+                                            <p>
+                                                <span>${comnum}</span>个
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p> 注册用户：</p>
+                                            <p>
+                                                <span>${num3}</span>个
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p> 活跃用户：</p>
+                                            <p>
+                                                <span>${todayloginlog}</span>个
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div id="container" class="chart"></div>
+            </div>
+            <div class="col-sm-12">
+                <div id="container2" class="chart"></div>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="../js/jquery-2.0.3.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../../lib/echarts.min.js"></script>
+    <script type="text/javascript">
+        var myChart2 = echarts.init(document.getElementById('container2'));
+
+        // 指定图表的配置项和数据
+        var option2 = {
+            title: {
+                text: '结算数据'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['结算量', '结算金额']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                    name: '结算量',
+                    type: 'line',
+                    data: []
+                },
+                {
+                    name: '结算金额',
+                    type: 'line',
+                    data: []
+                }
+            ]
+        };
+
+
+        var myChart = echarts.init(document.getElementById('container'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '用户数据'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['注册量', '用户登录量']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                    name: '注册量',
+                    type: 'line',
+                    data: []
+                },
+                {
+                    name: '用户登录量',
+                    type: 'line',
+                    data: []
+                }
+            ]
+        };
+
+
+
+        $(function () {
+            var date = new Array();
+            var register_num = new Array();
+            var login_num = new Array();
+            $.ajax({
+                url: "/supermarket/back/console/find_UserRegister",
+                type: "POST",
+                data: {},
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    var list = data.list;
+                    $.each(list, function (i) {
+                        date[i] = toDate(list[i].create_time);
+                        register_num[i] = list[i].register_num;
+                        login_num[i] = list[i].login_num;
+                    });
+                }
+            });
+            option.xAxis.data = date;
+            option.series[0].data = register_num;
+            option.series[1].data = login_num;
+            myChart.setOption(option);
+        })
+
+
+
+        $(function () {
+            var date = new Array();
+            var apply_number = new Array();
+            var settlement_price = new Array();
+            $.ajax({
+                url: "/supermarket/back/console/find_UserSettlement",
+                type: "POST",
+                data: {},
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    //  debugger;
+                    var list = data.list;
+                    $.each(list, function (i) {
+                        date[i] = toDate(list[i].settlement_time);
+                        apply_number[i] = list[i].apply_number;
+                        settlement_price[i] = list[i].settlement_price / 100;
+                    });
+                }
+            });
+            option2.xAxis.data = date;
+            option2.series[0].data = apply_number;
+            option2.series[1].data = settlement_price;
+            myChart2.setOption(option2);
+        })
+
+        /*时间戳转换日期格式yyyy-MM-dd*/
+        function toDate(number) {
+            var dateTime = new Date(parseInt(number))
+            var year = dateTime.getFullYear();
+            var month = (dateTime.getMonth() + 1 < 10 ? '0' + (dateTime.getMonth() + 1) : dateTime.getMonth() + 1);
+            var day = dateTime.getDate() < 10 ? "0" + dateTime.getDate() : dateTime.getDate()
+            var timeSpanStr = year + '-' + month + '-' + day;
+            return timeSpanStr;
+        }
+    </script>
+
+</body>
+
+</html>

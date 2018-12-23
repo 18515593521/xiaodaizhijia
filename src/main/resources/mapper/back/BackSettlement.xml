@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backSettlement">
+	<sql id="settlement">
+		commodity_settlement.cs_id,
+		commodity_settlement.com_id,
+		commodity_settlement.sys_sa_id,
+		DATE(commodity_settlement.settlement_time) settlement_time,
+		(SELECT COUNT(user_footprint.uf_id) from user_footprint where user_footprint.com_id=commodity_settlement.com_id AND DATE(user_footprint.create_time)= DATE(settlement_time)) click_number,
+		commodity_settlement.apply_number,
+		commodity_settlement.cs_picture,
+		commodity_settlement.settlement_price,
+		commodity_settlement.create_time,
+		commodity_settlement.remarks,
+		commodity_settlement.state
+	</sql>
+	
+	<insert id="save_settlement" parameterType="map">
+		INSERT INTO commodity_settlement(cs_id,com_id,sys_sa_id,settlement_time,click_number,apply_number,cs_picture,settlement_price,remarks,create_time) 
+		VALUES(#{cs_id},#{com_id},#{sys_sa_id},#{settlement_time},
+		#{click_number},#{apply_number},#{cs_picture},#{settlement_price},#{remarks},NOW())
+	</insert>
+	
+	<!-- 查询点击量和商品单价 -->
+	<select id="find_clicknumber" resultType="map" parameterType="map">	
+		SELECT(SELECT COUNT(user_footprint.uf_id) FROM user_footprint where user_footprint.com_id=commodity.com_id and DATE(user_footprint.create_time)=#{create_time}) click_number, commodity.com_price from commodity
+		where commodity.com_id=#{com_id}	
+	</select>
+	
+	<!-- 根据id查询结算明细  -->
+	<select id="find_settlement" resultType="map" parameterType="java.lang.String">
+		SELECT <include refid="settlement"></include> from commodity_settlement where com_id=#{com_id}
+	</select>
+	<!-- 修改结算状态 -->
+	<update id="update_settlestate" parameterType="java.lang.String">
+		update commodity_settlement SET state = 1 where cs_id=#{cs_id}
+	</update>
+</mapper>

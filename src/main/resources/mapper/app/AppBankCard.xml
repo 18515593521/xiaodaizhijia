@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="appBankCard">
+	<sql id="bankCard">
+		bc_id,
+		bc_name,
+		bc_click,
+		bc_img,
+		bc_describe,
+		bc_url
+	</sql>
+	<!-- 查询银行卡信息 -->
+	<select id="find_BankCard" resultType="map">
+		SELECT <include refid="bankCard"></include> FROM bank_card WHERE isdisplay = 0 AND state = 0
+	</select>
+	
+	<!-- 点击量加1 -->
+	<update id="update_click" parameterType="java.lang.String">
+		UPDATE bank_card SET bc_click = bc_click+1 where  bc_id=#{bc_id}
+	</update>
+</mapper>

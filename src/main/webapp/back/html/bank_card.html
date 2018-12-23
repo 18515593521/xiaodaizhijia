@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>银行卡</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="Amee" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/ace.min.css" />
+    <link rel="stylesheet" href="../css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <!--[if IE 7]>
+	<link rel="stylesheet" href="../css/font-awesome-ie7.min.css"/>
+	<![endif]-->
+    <!--[if lte IE 8]>
+	<link rel="stylesheet" href="../css/ace-ie.min.cskans"/>
+	<![endif]-->
+    <!--[if lt IE 9]>
+	<script src="../js/html5shiv.js"></script>
+	<script src="../js/respond.min.js"></script>
+	<![endif]-->
+    <script src="../js/ace-extra.min.js"></script>
+</head>
+
+<body class="skin-3 bg-fff  scrolling">
+    <div class="breadcrumbs " id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                首页
+            </li>
+            <li>
+                银行卡管理
+            </li>
+        </ul>
+       
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="" class="form-horizontal" role="form" method="post">
+                    <div class="form-group  col-sm-6 col-lg-4 ">
+                        <label class="col-sm-3 control-label no-padding-right"> 信用卡名称 </label>
+                        <div class="col-sm-9">
+                            <input id="bc_name" type="text" placeholder="" class="input-large" name="" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group  col-sm-12 center">
+                        <a href="#modal"  role="button" data-toggle="modal" class="btn btn-xs btn-primary" >
+                            新增
+                        </a>
+                        <button type="button" class="btn btn-xs btn-success" id="search">
+                            搜索
+                            <i class="icon-arrow-right icon-on-right bigger-110"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table id="table" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>信用卡名称</th>
+                                <th>信用卡图片</th>
+                                <th>网址路径</th>
+                                <th>描述</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    
+    <div id="modal" class="modal fade">
+                <div class="modal-dialog " style="width: 40%" style="margin-top: 200px">
+                    <div class="modal-content">
+                        <div class="modal-header no-padding">
+                            <div class="table-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    <span>&times;</span>
+                                </button>
+                                添加数据
+                            </div>
+                        </div>
+                        <div class="modal-body no-padding">
+                            <div class="row mt-10 form-horizontal ">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-sm-3 control-label no-padding-right">信用卡名称</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="bc_name" placeholder="" class="input-large" name="" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label class="col-sm-3 control-label no-padding-right">网址路径</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="bc_url" placeholder="" class="input-large" name="" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label class="col-sm-3 control-label no-padding-right">信用卡图片</label>
+                                    <div class="col-sm-9">
+                                        <input type="file" id="file" placeholder="" class="input-large" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label class="col-sm-3 control-label no-padding-right">描述</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="bc_describe" placeholder="" class="input-large" name="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer no-margin-top">
+                            <div class="col-sm-12 center">
+                                <button class="btn btn-xs btn-success" data-dismiss="modal" onclick="clickbtnSave()">
+                                    确定
+                                </button>
+                                <button class="btn btn-xs btn-danger" data-dismiss="modal">取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+    </div>
+    
+    
+    <div id="modal2" class="modal fade">
+    	<input type="hidden" value="" id="id">
+               <div class="modal-dialog " style="width: 40%" style="margin-top: 200px">
+                   <div class="modal-content">
+                       <div class="modal-header no-padding">
+                           <div class="table-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                   <span>&times;</span>
+                               </button>
+                               修改数据
+                           </div>
+                       </div>
+                       <div class="modal-body no-padding">
+                           <div class="row mt-10 form-horizontal ">
+                               <div class="form-group col-xs-12">
+                                   <label class="col-sm-3 control-label no-padding-right">信用卡名称</label>
+                                   <div class="col-sm-9">
+                                       <input type="text" id="bc_name2" placeholder="" class="input-large" name="" />
+                                   </div>
+                               </div>
+                               <div class="form-group col-xs-12">
+                                   <label class="col-sm-3 control-label no-padding-right">网址路径</label>
+                                   <div class="col-sm-9">
+                                       <input type="text" id="bc_url2" placeholder="" class="input-large" name="" />
+                                   </div>
+                               </div>
+                               <div class="form-group col-xs-12">
+                                   <label class="col-sm-3 control-label no-padding-right">信用卡图片</label>
+                                   <div class="col-sm-9">
+                                       <input type="file" id="file2" placeholder="" class="input-large" />
+                                   </div>
+                               </div>
+                               <div class="form-group col-xs-12">
+                                   <label class="col-sm-3 control-label no-padding-right">描述</label>
+                                   <div class="col-sm-9">
+                                       <input type="text" id="bc_describe2" placeholder="" class="input-large" name="" />
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="modal-footer no-margin-top">
+                           <div class="col-sm-12 center">
+                               <button class="btn btn-xs btn-success" data-dismiss="modal" onclick="clickbtnUpdate()">
+                                   确定
+                               </button>
+                               <button class="btn btn-xs btn-danger" data-dismiss="modal">取消
+                               </button>
+                           </div>
+                       </div>
+                   </div>
+                   <!-- /.modal-content -->
+               </div>
+               <!-- /.modal-dialog -->
+    </div>
+    
+   
+
+    <!-- page specific plugin scripts -->
+    <script src="../js/jquery-2.0.3.min.js"></script>
+    <script src="../js/laydate/laydate.js"></script>
+      <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../js/jquery.dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+	    var oTable1;
+		jQuery(function ($) {
+			//初始化table
+			oTable1 = $('#table')
+				.dataTable({
+					"bPaginate": true, //分页工具条显示
+					//"sPaginationType" : "full_numbers",//分页工具条样式
+					"bStateSave": false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态  
+					"bScrollCollapse": true, //当显示的数据不足以支撑表格的默认的高度
+					"bLengthChange": true, //每页显示的记录数
+					"bFilter": false, //搜索栏
+					"bSort": false, //是否支持排序功能
+					"bInfo": true, //显示表格信息
+					"bAutoWidth": true, //自适应宽度
+					"fnRowCallback": function (nRow, aData, iDisplayIndex) { //解决序号问题
+						jQuery("td:first", nRow).html(iDisplayIndex + 1);
+						return nRow;
+					},
+					"bJQueryUI": true, //是否开启主题
+					"iDisplayStart": 0,
+					"iDisplayLength": 25,
+					"bDestroy": false,
+					"bProcessing": true, //开启读取服务器数据时显示正在加载中……特别是大数据量的时候，开启此功能比较好
+					"bServerSide": true, //服务器处理分页，默认是false，需要服务器处理，必须true
+					"sAjaxDataProp": "aData", //是服务器分页的标志，必须有 
+					"fnServerParams": function (aoData) {
+						aoData.push({
+							"name": "bc_name",
+							"value": $("#bc_name").val()
+						});
+						
+					},
+					"sAjaxSource": "/supermarket/back/card/find_bankCard", //通过ajax实现分页的url路径。  
+					"aoColumns": [ //初始化要显示的列
+						
+						{
+							"mDataProp": "",
+							"sDefaultContent": ''
+						},
+						{
+							"mDataProp": "bc_name", //获取列数据，跟服务器返回字段一致
+							"sDefaultContent": ''
+							
+						},
+						{
+							"mDataProp": "bc_img",
+							"mRender": function (data, type, full) {
+    							return "<img src='"+data+"' alt='' width='180' height='100'>";
+    							
+    						},
+							"sDefaultContent": ''
+						},
+						
+						{
+							"mDataProp": "bc_url",
+							"sDefaultContent": '' //获取列数据，跟服务器返回字段一致
+	
+						},
+						{
+							"mDataProp": "bc_describe",
+							"sDefaultContent": '' //获取列数据，跟服务器返回字段一致
+	
+						},
+						
+						{
+							"mDataProp": "create_time",
+							"mRender": function (data, type, full) {
+								return formatDate(new Date(data));
+								
+							},
+							"sDefaultContent": '' //获取列数据，跟服务器返回字段一致
+	
+						},
+						{
+							"mDataProp": "state",
+							"mRender": function (data, type, full) {	
+								var str="";
+								if(data==0){
+									str="<a href='#modal2'  role='button' data-toggle='modal' class='btn btn-xs btn-primary' onclick=findByIdCard('"+full.bc_id+"') >"+
+	                    			" 修改</a>"+    
+	                    			 "<button class='btn btn-xs btn-danger'  onclick=clickbtnDeleteCom('"+full.bc_id+"')>"+
+	                                    "删除</button>"+
+	                                "<button class='btn btn-xs btn-info'  onclick=clickbtnOnShelf('"+full.bc_id+"')>"+
+	                                    "下架</button>";
+								}else{
+									str="<a href='#modal2'  role='button' data-toggle='modal' class='btn btn-xs btn-primary' onclick=findByIdCard('"+full.bc_id+"')>"+
+	                    			" 修改</a>"+   
+	                    			 "<button class='btn btn-xs btn-danger'  onclick=clickbtnDeleteCom('"+full.bc_id+"')>"+
+	                                    "删除</button>"+
+	                                "<button class='btn btn btn-xs btn-default' onclick=clickbtnUnderShelf('"+full.bc_id+"')>"+
+	                                    "上架</button>";
+								}
+								
+								return str;			
+							},
+							"sDefaultContent": '' //获取列数据，跟服务器返回字段一致
+	
+						}				
+					],
+	
+	
+					"oLanguage": { //语言设置
+						"sProcessing": "处理中...",
+						"sLengthMenu": "显示 _MENU_ 项结果",
+						"sZeroRecords": "没有匹配结果",
+						"sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+						"sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+						"sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+						"sInfoPostFix": "",
+						"sSearch": "搜索:",
+						"sUrl": "",
+						"sEmptyTable": "表中数据为空",
+						"sLoadingRecords": "载入中...",
+						"sInfoThousands": ",",
+						"oPaginate": {
+							"sFirst": "首页",
+							"sPrevious": "上页",
+							"sNext": "下页",
+							"sLast": "末页"
+						},
+						"oAria": {
+							"sSortAscending": ": 以升序排列此列",
+							"sSortDescending": ": 以降序排列此列"
+						}
+					}
+				});
+				
+					function formatDate(now) {
+						var year = now.getFullYear();
+						
+						var date = zero(now.getDate());
+						var month = zero(now.getMonth() + 1);
+						
+						return year + "-" + month + "-" + date ;
+					}
+			
+					function zero(time) {
+						if (time < 10) return "0" + time;
+						return time;
+					}
+					
+					
+				});
+		
+		$("#search").click(function () {
+			
+			oTable1.fnDraw();
+		})
+		
+		 function clickbtnOnShelf(id){
+			if(confirm("确定要下架吗?")){
+				var st="upper";
+				 $.ajax({
+	                 url:"/supermarket/back/card/upd_state",
+	                 type:"POST",
+	                 dataType:"json",
+	                 data:{id:id,st:st},
+	                success:function(data){
+	                	window.location.reload();
+	                }
+		         }) 
+			}
+		}
+		//改位上架
+		function clickbtnUnderShelf(id){
+			if(confirm("确定要上架吗?")){
+				 var st="under";
+				 $.ajax({
+	                 url:"/supermarket/back/card/upd_state",
+	                 type:"POST",
+	                 dataType:"json",
+	                 data:{id:id,st:st},
+	                success:function(data){
+	                	window.location.reload();
+	                }
+		         }) 
+			}
+		}
+		
+		//删除商品
+		function clickbtnDeleteCom(id){
+			if(confirm("确定删除么?")){
+				 $.ajax({
+	                 url:"/supermarket/back/card/upd_isdisplay",
+	                 type:"POST",
+	                 dataType:"json",
+	                 data:{bc_id:id},
+	                success:function(data){
+	                	oTable1.fnDraw();
+	                }
+		         }) 
+			}
+		}
+		
+		function clickbtnSave(){
+   		 var formData = new FormData();
+   		 formData.append('bc_name',$('#bc_name').val());
+   		 formData.append('bc_url',$('#bc_url').val());
+   		 formData.append('bc_describe',$('#bc_describe').val()); 
+   		 formData.append('file',$('#file')[0].files[0]);
+  		    
+	   		 $.ajax({
+				 url:'/supermarket/back/card/save_settlement',
+			 		type:'POST',
+					data:formData,
+					async: false,  
+					cache: false, 
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					success:function(data){
+						window.location.reload();
+					}
+			 })
+			
+	   }
+		
+		//查询
+		function findByIdCard(id){	
+			 $.ajax({
+                 url:"/supermarket/back/card/findByIdCard",
+                 type:"POST",
+                 dataType:"json",
+                 data:{bc_id:id},
+                success:function(data){
+                	
+                	var card = data.map;
+                	$("#bc_name2").val(card.bc_name);
+                	$("#bc_url2").val(card.bc_url);
+                	$("#bc_describe2").val(card.bc_describe);
+                	$("#id").val(card.bc_id);
+                }
+	         }) 
+		}
+		
+		function clickbtnUpdate(){
+	   		 var formData = new FormData();
+	   		 formData.append('bc_name',$('#bc_name2').val());
+	   		 formData.append('bc_url',$('#bc_url2').val());
+	   		formData.append('bc_id',$('#id').val());
+	   		 formData.append('bc_describe',$('#bc_describe2').val()); 
+	   		 formData.append('file',$('#file2')[0].files[0]);
+		   		 $.ajax({	   		
+					 url:'/supermarket/back/card/upd_card',
+				 		type:'POST',
+						data:formData,
+						async: false,  
+						cache: false, 
+						contentType: false, //不设置内容类型
+						processData: false, //不处理数据
+						success:function(data){
+							window.location.reload();
+						}
+				 })
+				
+		   }
+			
+		
+		
+    </script>
+
+</body>
+
+</html>

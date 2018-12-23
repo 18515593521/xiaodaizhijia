@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>用户信息</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="Amee" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<link rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../css/font-awesome.min.css" />
+	<link rel="stylesheet" href="../css/ace.min.css" />
+	<link rel="stylesheet" href="../css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="../css/admin.css" />
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="../css/font-awesome-ie7.min.css"/>
+	<![endif]-->
+	<!--[if lte IE 8]>
+	<link rel="stylesheet" href="../css/ace-ie.min.css"/>
+	<![endif]-->
+	<!--[if lt IE 9]>
+	<script src="../js/html5shiv.js"></script>
+	<script src="../js/respond.min.js"></script>
+	<![endif]-->
+	<script src="../js/ace-extra.min.js"></script>
+</head>
+
+<body class="skin-3 bg-fff  scrolling">
+	<div class="breadcrumbs " id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				首页
+			</li>
+			<li>
+				用户信息
+			</li>
+		</ul>
+
+	</div>
+	<div class="page-content">
+		<div class="row">
+			<div class="col-sm-12">
+				<form action="" class="form-horizontal" role="form" method="post">
+					<!-- <div class="form-group  col-sm-6 col-lg-4 ">
+						<label class="col-sm-3 control-label no-padding-right"> 用户姓名 </label>
+						<div class="col-sm-9">
+							<input id="user_name" type="text" placeholder="" class="input-large" name="" />
+						</div>
+					</div> -->
+					<div class="form-group  col-sm-6  col-lg-4 ">
+						<label class="col-sm-3 control-label no-padding-right"> 手机 </label>
+						<div class="col-sm-9">
+							<input id="user_phone" type="text" placeholder="" class="input-large" name="" />
+						</div>
+					</div>
+
+					<div class="form-group  col-sm-6  col-lg-4 ">
+						<label class="col-sm-3 control-label no-padding-right">名单</label>
+						<div class="col-sm-9">
+							<select class="input-large" id="state" name="state">
+								<option value="5">====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;====</option>
+								<option value="0">=====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;否 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;======</option>
+								<option value="1">=====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;======</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group  col-sm-6  col-lg-4 ">
+						<label class="col-sm-3 control-label no-padding-right">是否登录</label>
+						<div class="col-sm-9">
+							<select class="input-large" id="login" name="login">
+								<option value="5">====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;====</option>
+								<option value="1">=====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已登录 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;======</option>
+								<option value="2">=====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;未登录 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;======</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group  col-sm-6  col-lg-4 ">
+						<label class="col-sm-3 control-label no-padding-right"> 注册时间 </label>
+						<div class="col-sm-9">
+							<div class="pos-rel">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="icon-calendar"></i>
+									</span>
+									<input class=" date-picker" id="selectDate" type="text" />
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group  col-sm-6  col-lg-4 ">
+						<label class="col-sm-3 control-label no-padding-right">渠道来源</label>
+						<div class="col-sm-9">
+							<select class="input-large" id="source" name="source">
+								<option value="">====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;====</option>
+								
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group  col-sm-12 center">
+
+						<button type="button" class="btn btn-xs btn-success" id="search">
+							搜索
+							<i class="icon-arrow-right icon-on-right bigger-110"></i>
+						</button>
+						 <!-- <button type="button" class="btn btn-xs btn-success" id="send">
+							唤醒短信
+							<i class="icon-arrow-right icon-on-right bigger-110"></i>
+						</button>  -->
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-12">
+				<div class="table-responsive">
+					<table id="table" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th>手机型号</th>
+								<th>手机号</th>							
+								<th>app版本</th>
+								<th>注册时间</th>
+								<th>登录时间</th>
+								<th>渠道来源</th>
+							</tr>
+						</thead>
+						<tbody align="left">
+
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+			<i class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+
+	<!-- page specific plugin scripts -->
+	<script src="../js/jquery-2.0.3.min.js"></script>
+	<script src="../js/laydate/laydate.js"></script>
+	<script src="../js/jquery.dataTables.min.js"></script>
+	<script src="../js/jquery.dataTables.bootstrap.js"></script>
+
+	<script type="text/javascript">
+		laydate.render({
+			elem: '#selectDate',
+			range: true
+
+		});
+
+		$(function () {
+			var flag = false;
+			$("#close").click(function () {
+				flag = !flag;
+				$(this).text(flag ? '查看' : '收起');
+				$("#table")[flag ? "hide" : "show"]()
+			})
+			
+			
+			$.ajax({
+                url:"/supermarket/back/user/findCnName",
+                type:"POST",
+                dataType:"json",
+                async:false,
+                success:function(data){
+                	debugger;
+                	var channe = data.list;       
+                	var option="";
+                	$("#source option:gt(0)").remove(); 
+                	for (var i = 0; i < channe.length; i++) { 
+                		option +='<option value='+channe[i].cn_name+'>';
+                		option +='====&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+channe[i].cn_name+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;====';
+                		option +="</option>";
+					}
+                	$("#source").append(option);  
+                }
+		})
+		})
+		var oTable1;
+		jQuery(function ($) {
+			//初始化table
+			oTable1 = $('#table')
+				.dataTable({
+					"bPaginate": true, //分页工具条显示
+					//"sPaginationType" : "full_numbers",//分页工具条样式
+					"bStateSave": false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态  
+					"bScrollCollapse": true, //当显示的数据不足以支撑表格的默认的高度
+					"bLengthChange": true, //每页显示的记录数
+					"bFilter": false, //搜索栏
+					"bSort": false, //是否支持排序功能
+					"bInfo": true, //显示表格信息
+					"bAutoWidth": true, //自适应宽度
+					"fnRowCallback": function (nRow, aData, iDisplayIndex) { //解决序号问题
+						jQuery("td:first", nRow).html(iDisplayIndex + 1);
+						return nRow;
+					},
+					"bJQueryUI": true, //是否开启主题
+					"iDisplayStart": 0,
+					"iDisplayLength": 25,
+					"bDestroy": false,
+					"bProcessing": true, //开启读取服务器数据时显示正在加载中……特别是大数据量的时候，开启此功能比较好
+					"bServerSide": true, //服务器处理分页，默认是false，需要服务器处理，必须true
+					"sAjaxDataProp": "aData", //是服务器分页的标志，必须有 
+					"fnServerParams": function (aoData) {
+						 aoData.push({
+							"name": "user_source",
+							"value": $("#source").val()
+						}); 
+						aoData.push({
+							"name": "user_phone",
+							"value": $('#user_phone').val()
+						});
+						aoData.push({
+							"name": "name_list",
+							"value": $('#state').val()
+						});
+						aoData.push({
+							"name": "selectDate",
+							"value": $("#selectDate").val()
+						});
+						aoData.push({
+							"name": "login",
+							"value": $("#login").val()
+						});
+					},
+					"sAjaxSource": "/supermarket/back/user/find_user", //通过ajax实现分页的url路径。  
+					"aoColumns": [ //初始化要显示的列				
+						{
+							"mDataProp": "",
+							"sDefaultContent": ''
+						},
+						{
+							"mDataProp": "device_model",
+							"mRender": function (data, type, full) {	
+								if (data == null || data == "") return "";
+								if (data.indexOf('iphone') != -1 || data.indexOf('iPhone') != -1) {
+									return "<img src='http://www.jyoudai.com:80/picture/back/logo/iPhone_logo.png' title='iPhone' alt='iPhone' style='width: 20px;margin-right: 3px;'/>" +
+										data;
+								} else {
+									return "<img src='http://www.jyoudai.com:80/picture/back/logo/Android_logo.png' title='安卓' alt='Android' style='width: 20px;margin-right: 3px;'/>" +
+										data;
+								}
+							},
+							"sDefaultContent": ''
+						}, 
+						/* {
+							"mDataProp": "user_name", //获取列数据，跟服务器返回字段一致
+							"sDefaultContent": ''
+
+						}, */
+						{
+							"mDataProp": "user_phone",
+							"sDefaultContent": ''
+						},
+						 
+						{
+							"mDataProp": "appN_V",
+							"sDefaultContent": ''
+						},
+						{
+							"mDataProp": "create_time",
+							"mRender": function (data, type, full) {
+								if (data == "" || data == null) {
+									return '';
+								}
+								return formatDate(new Date(data));
+							}
+						},
+						{
+							"mDataProp": "login_time",
+							"mRender": function (data, type, full) {
+								if (data == "" || data == null) {
+									return '';
+								}
+								return formatDate(new Date(data));
+							}
+						},
+						{
+							"mDataProp": "user_source",
+							"sDefaultContent": ''
+						},
+
+					],
+
+
+					"oLanguage": { //语言设置
+						"sProcessing": "处理中...",
+						"sLengthMenu": "显示 _MENU_ 项结果",
+						"sZeroRecords": "没有匹配结果",
+						"sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+						"sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+						"sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+						"sInfoPostFix": "",
+						"sSearch": "搜索:",
+						"sUrl": "",
+						"sEmptyTable": "表中数据为空",
+						"sLoadingRecords": "载入中...",
+						"sInfoThousands": ",",
+						"oPaginate": {
+							"sFirst": "首页",
+							"sPrevious": "上页",
+							"sNext": "下页",
+							"sLast": "末页"
+						},
+						"oAria": {
+							"sSortAscending": ": 以升序排列此列",
+							"sSortDescending": ": 以降序排列此列"
+						}
+					}
+				});
+
+			function formatDate(now) {
+				var year = now.getFullYear();
+				var hour = zero(now.getHours());
+				var date = zero(now.getDate());
+				var month = zero(now.getMonth() + 1);
+				var minute = zero(now.getMinutes());
+				var second = zero(now.getSeconds());
+				return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+			}
+
+			function zero(time) {
+				if (time < 10) return "0" + time;
+				return time;
+			}
+		});
+
+		//搜索
+		$("#search").click(function () {
+			oTable1.fnDraw();
+		})
+		
+		$("#send").click(function(){
+　　			$.ajax({
+                url:"/supermarket/back/user/find_phone",
+                type:"POST",
+                data:{},
+                dataType:"json",
+                success:function(data){
+                	window.location.reload();
+                }
+    		}) 
+		})
+	</script>
+
+</body>
+
+</html>

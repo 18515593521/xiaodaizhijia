@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="width: 100%">
+
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="Author" content="Amee" />
+	<meta name="Keywords" content="" />
+	<meta name="Description" content="" />
+	
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="lib/layer.css">
+	
+	<script type="text/javascript">
+		! function (t) {
+			var e = 750,
+				i = t.document,
+				n = i.documentElement,
+				o = "orientationchange" in t ? "orientationchange" : "resize",
+				a = function t() {
+					var i = n.getBoundingClientRect().width;
+					return n.style.fontSize = 5 * Math.max(Math.min(i / e * 20, 11.2), 8.55) + "px", t
+				}();
+			n.setAttribute("data-dpr", t.navigator.appVersion.match(/iphone/gi) ? t.devicePixelRatio : 1), /iP(hone|od|ad)/.test(
+				t.navigator.userAgent) && (i.documentElement.classList.add("ios"), parseInt(t.navigator.appVersion.match(
+				/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8 && i.documentElement.classList.add("hairline")), i.addEventListener && (t.addEventListener(
+				o, a, !1), i.addEventListener("DOMContentLoaded", a, !1))
+		}(window);
+	</script>
+	<title>绑定</title>
+</head>
+
+<body class="register">
+	<div class="logo">
+		<img src="./images/image/logo.png" alt="">
+	</div>
+	<div class="input">
+		<div class="row">
+			<input type="tel" id="phone" placeholder="请输入您的手机号">
+		</div>
+		<div class="row passward">
+			<input type="text" id="pwd" placeholder="请输入您的密码">
+		</div>
+		<div class="btn" id="apply">绑定</div>
+		<div class="tip">
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f40fcd4a4a89333&redirect_uri=http%3A%2F%2Fwww.51happypay.com%2Fsupermarket%2Fwx%2Fregister.html&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect" id="register">立即注册</a>
+        <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f40fcd4a4a89333&redirect_uri=http%3A%2F%2Fwww.51happypay.com%2Fsupermarket%2Fwx%2Frest.html&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect" id="reset">忘记密码</a>
+		</div>
+	</div>
+	
+	
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="/supermarket/lib/jquery.cookie.js"></script>
+	<script src="js/paramsED.js"></script>
+	<script src="lib/layer.js"></script>
+
+	<script type="text/javascript">
+	var openid = $.cookie("openid");
+	
+
+
+		var decrypt;	
+		 $(function(){
+			 decrypt = getDecrypt();
+	     })
+	   
+		
+		
+		$("#apply").click( function() {
+			 
+			var telPhone = $("#phone").val();
+			var pwd = $("#pwd").val();
+			
+			if(!isNotNull(telPhone)||!isNotNull(pwd)){
+				layer.open({
+					content : '对不起，您的输入有误',
+					skin : 'msg',
+					time : 2
+				//2秒后自动关闭
+				});
+				return;
+			} 
+		
+			$.ajax({
+				type : "POST",
+				url : "/supermarket/wechatUserinfo/loginByPhoneAndPwd.do",
+				data : {
+					"data" : encryptByDES(
+							formatParm(telPhone, pwd), decrypt)
+				},
+				dataType:"JSON",
+				async : false,
+				success : function(data) {
+					var msgcontent = "";
+					if (data.code == 0) {
+						layer.open({
+							content : '绑定成功',
+							skin : 'msg',
+							time : 2
+						//2秒后自动关闭
+						});
+						window.location.href = "http://www.51happypay.com/supermarket/h5/market.html";
+					} else if (data.code == 20003) {
+						layer.open({
+							content : '您尚未注册！',
+							skin : 'msg',
+							time : 2
+						//2秒后自动关闭
+						});						
+					} else if (data.code == 20004) {
+						layer.open({
+							content : '密码错误！',
+							skin : 'msg',
+							time : 2
+						//2秒后自动关闭
+						});
+					} else {
+						layer.open({
+							content : '系统繁忙，请稍候再试',
+							skin : 'msg',
+							time : 2
+						//2秒后自动关闭
+						});
+					}	
+				}
+			});
+		})
+	
+		function isNotNull(data){
+			if(null==data || "" == data){
+				return false;
+			}
+			return true;
+		}
+		 
+		function formatParm(tel, pwd) {
+			
+			var result = "{" + "\"phone\":" + "\"" + tel + "\"" + ","
+					+ "\"user_password\":" + "\"" + pwd + "\"" + "," 
+					+ "\"openid\":" + "\"" + openid + "\"" + "}";
+			return result;
+		}
+	</script>
+
+</body>
+
+</html>

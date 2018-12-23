@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backFlow">
+	<sql id="flow">
+		flow.com_name,
+		flow.ci_name,
+		IFNULL(flow.click,0) click,
+		flow.rank,
+		IFNULL(now_flow.now_click,0) now_click,
+		now_flow.now_rank
+	</sql>
+
+	<!-- 分页查询 -->
+	<select id="find_flow" parameterType="com.dd.supermarket.utils.PageData" resultType="com.dd.supermarket.utils.PageData">	
+		SELECT com.com_id,com.com_name,com_price,
+		COUNT(DISTINCT app.aa_id) app_Applynum,		
+		(IFNULL((SELECT SUM(apply_number) from commodity_settlement where commodity_settlement.com_id = com.com_id 
+		<if test="time!=null and time!=''">
+				AND DATE(settlement_time)= #{time}
+		</if>
+		),0) ) apply_num,
+		(IFNULL((SELECT SUM(apply_number) from commodity_settlement where commodity_settlement.com_id = com.com_id and commodity_settlement.state=0
+		<if test="time!=null and time!=''">
+				AND DATE(settlement_time)= #{time}
+		</if>
+		),0) ) wait_applynum,		
+		(IFNULL((SELECT SUM(apply_number) from commodity_settlement where com_id = com.com_id 
+		AND DATE(settlement_time)=DATE(date_sub(NOW(),interval 1 day))),0) ) Yesterday_num, 								
+		IFNULL(COUNT(DISTINCT uf.uf_id),0) click FROM commodity com
+		LEFT JOIN app_apply app ON com.com_id = app.com_id 
+		<if test="time!=null and time!=''">
+			AND DATE(app.create_time) = #{time}
+		</if>
+		LEFT JOIN user_footprint uf ON com.com_id = uf.com_id 
+		<if test="time!=null and time!=''">
+			AND DATE(uf.create_time) = #{time}
+		</if>
+		WHERE isdisplay = 0 AND (com.state = 0 OR (com.state=5 AND DATE(com.update_time) &gt;= DATE(NOW())))
+		<if test="com_name!=null and com_name!=''">
+			and com.com_name=#{comname}
+		</if>		
+		GROUP BY com.com_id
+		ORDER BY com.com_sort,apply_num desc
+	</select>
+
+</mapper>

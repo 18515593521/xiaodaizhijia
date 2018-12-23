@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backBusiness">
+	<sql id="business">
+		business_cooperati.bc_id,
+		business_cooperati.user_id,
+		business_cooperati.bc_content,
+		business_cooperati.processing_content,
+		business_cooperati.bc_state,
+		business_cooperati.processing_time,
+		business_cooperati.create_time,
+		business_cooperati.remarks,
+		user_userinfos.user_name,
+		user_userinfos.user_phone
+	</sql>
+	<!-- 查询 -->
+	<select id="find_business"  resultType="map">
+		SELECT <include refid="business"></include>from business_cooperati 
+		LEFT JOIN user_userinfos ON user_userinfos.user_id=business_cooperati.user_id
+		ORDER BY business_cooperati.create_time DESC
+	</select>
+	
+	<update id="update_business" parameterType="map">	
+		UPDATE business_cooperati SET remarks=#{remarks} 
+		where bc_id=#{bc_id}
+	</update>
+</mapper>

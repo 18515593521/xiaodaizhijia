@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backLoginLog">
+	<select id="find_llogbyid" parameterType="map" resultType="int">		
+		SELECT COUNT(id) FROM login_log WHERE ul_id = #{user_id} 
+	</select>
+	
+	<insert id="add_loginlog" parameterType="map">
+		INSERT INTO login_log VALUES(#{id},#{user_id},NOW())
+	</insert>
+	
+	<update id="upd_time" parameterType="map">
+		UPDATE login_log SET login_time = NOW() WHERE ul_id = #{user_id}
+	</update>
+</mapper>

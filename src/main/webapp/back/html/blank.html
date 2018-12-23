@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="Amee" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<link rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../css/font-awesome.min.css" />
+	<link rel="stylesheet" href="../css/ace.min.css" />
+	<link rel="stylesheet" href="../css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="../css/admin.css" />
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="../css/font-awesome-ie7.min.css"/>
+	<![endif]-->
+	<!--[if lte IE 8]>
+	<link rel="stylesheet" href="../css/ace-ie.min.css"/>
+	<![endif]-->
+	<!--[if lt IE 9]>
+	<script src="../js/html5shiv.js"></script>
+	<script src="../js/respond.min.js"></script>
+	<![endif]-->
+	<script src="../js/ace-extra.min.js"></script>
+</head>
+
+<body class="skin-3 navbar-fixed breadcrumbs-fixed">
+	<div class="navbar navbar-default navbar-default navbar-fixed-top" id="navbar">
+		<div class="navbar-container" id="navbar-container">
+			<div class="navbar-header pull-left">
+				<div class="navbar-brand">
+					<p class="text-shadow">
+						贷款超市管理系统
+					</p>
+				</div>
+			</div>
+			<div class="navbar-header pull-right">
+				<div class="logo  pull-left  color-fff">
+					<img src="../images/image/happy.png" class="pull-left">
+					<p class="pull-left">${user.sys_sa_loginname} </p>
+				</div>
+				<div class="vertical pull-left"></div>
+				<div class="pull-left color-fff out">
+					<i class="icon-off icon-2x" onclick="quit()"></i>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="main-container" id="main-container">
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#">
+				<span class="menu-text"></span>
+			</a>
+			<div class="sidebar sidebar-fixed" id="sidebar">
+				<ul class="nav nav-list">
+					<#if (mapadminPower.sys_sm_name)?index_of("控制台")!=-1>
+						<li class="active">
+							<a href="/supermarket/back/console/register" target="right">
+								<i class="icon-desktop"></i>
+								<span class="menu-text"> 控制台 </span>
+							</a>
+						</li>
+					</#if>
+					<!-- mapadminPower sys_sm_name -->
+					<#if (mapadminPower.sys_sm_name)?index_of("流量监控")!=-1>
+						<li>
+							<a href="/supermarket/back/html/flow.html" target="right">
+								<i class="icon-adjust"></i>
+								<span class="menu-text"> 流量监控 </span>
+							</a>
+						</li>
+					</#if>
+
+					<#if (mapadminPower.sys_sm_name)?index_of("供应商管理")!=-1>
+						<li>
+							<a href="/supermarket/back/supplier/find_supplier" target="right">
+								<i class="icon-text-width"></i>
+								<span class="menu-text"> 供应商管理 </span>
+							</a>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("产品管理")!=-1>
+						<li>
+							<a href="/supermarket/back/html/products.html" target="right">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text"> 产品管理 </span>
+							</a>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("权限")!=-1>
+						<li data-has="yes">
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-list"></i>
+								<span class="menu-text">权限 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+
+								<li>
+									<a href="/supermarket/back/permissions/find_allrRolePower" target="right">
+										<i class="icon-double-angle-right"></i>
+										角色管理
+									</a>
+								</li>
+
+								<li>
+									<a href="/supermarket/back/admin/find_admin" target="right">
+										<i class="icon-double-angle-right"></i>
+										新增管理员
+									</a>
+								</li>
+								<li>
+									<a href="/supermarket/back/html/channel_power_list.html" target="right">
+										<i class="icon-double-angle-right"></i>
+										渠道管理
+									</a>
+								</li>
+								<li>
+									<a href="/supermarket/back/html/channel_power.html" target="right">
+										<i class="icon-double-angle-right"></i>
+										渠道权限
+									</a>
+								</li>
+							</ul>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("渠道统计")!=-1>
+						<li data-has="yes">
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-asterisk"></i>
+								<span class="menu-text">渠道统计</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+
+								<li>
+									<a href="/supermarket/back/html/channel_in.html" target="right">
+										<i class="icon-double-angle-right"></i>
+										内部渠道统计
+									</a>
+								</li>
+								<li>
+									<a href="/supermarket/back/html/channel_out.html" target="right">
+										<i class="icon-double-angle-right"></i>
+										外部渠道统计
+									</a>
+								</li>
+
+							</ul>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("渠道管理")!=-1>
+						<li>
+							<a href="/supermarket/back/html/channel_list.html" target="right">
+								<i class="icon-ban-circle"></i>
+								<span class="menu-text"> 渠道管理 </span>
+							</a>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("反馈管理")!=-1>
+						<li data-has="yes">
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-edit"></i>
+								<span class="menu-text">反馈管理 </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+
+								<li>
+									<a href="/supermarket/back/html/feedback.html" target="right">
+										<i class="icon-double-angle-right"></i>
+										问题反馈
+									</a>
+								</li>
+
+
+								<li>
+									<a href="/supermarket/back/business/find_business" target="right">
+										<i class="icon-double-angle-right"></i>
+										商家合作
+									</a>
+								</li>
+
+							</ul>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("日志管理")!=-1>
+						<li>
+							<a href="/supermarket/back/html/log.html" target="right">
+								<i class="icon-file-alt"></i>
+								<span class="menu-text"> 日志管理 </span>
+							</a>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("用户管理")!=-1>
+						<li>
+							<a href="/supermarket/back/html/users.html" target="right">
+								<i class="icon-tag"></i>
+								<span class=" icon-beaker"> 用户管理 </span>
+							</a>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("消息管理")!=-1>
+						<li>
+							<a href="/supermarket/back/html/message.html" target="right">
+								<i class="icon-calendar"></i>
+								<span class="icon-beer"> 消息管理 </span>
+							</a>
+						</li>
+					</#if>
+					<#if (mapadminPower.sys_sm_name)?index_of("信用卡管理")!=-1>
+						<li>
+							<a href="/supermarket/back/html/bank_card.html" target="right">
+								<i class="icon-file-alt"></i>
+								<span class=" icon-bell"> 信用卡管理 </span>
+							</a>
+						</li>
+						</#if>
+				</ul>
+				<div class="sidebar-collapse" id="sidebar-collapse">
+					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+				</div>
+
+				<!-- <script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'collapsed')
+					} catch (e) {}
+				</script> -->
+			</div>
+			<div class="admin">
+				<iframe id="barframe" scrolling="auto" rameborder="0" src="" name="right" height="100%"></iframe>
+			</div>
+
+		</div>
+	</div>
+	</div>
+	<!-- <script src="../js/jquery-2.0.3.min.js"></script> -->
+	<script src="../js/jquery-1.10.2.min.js"></script>
+
+	<!-- <script src="../js/ace-elements.min.js"></script> -->
+	<script src="../js/ace.min.js"></script>
+
+	<script>
+		$(function () {
+			var aLis = $(".nav-list").children("li")
+			aLis.click(function () {
+				var flag = $(this).data("has")
+				if (flag) {
+					// $(this).toggleClass("active open")
+					$(this).add("active")
+					var aLis2 = $(this).find("li")
+					aLis2.click(function () {
+						var that = $(this)
+						event.stopPropagation();
+						that.addClass("active").siblings().removeClass()
+						that.parents("li").siblings().removeClass().find("li").removeClass()
+
+					})
+				} else {
+					$(this).addClass("active").siblings().removeClass().children(".submenu").hide()
+					// $(this).siblings().children(".submenu").hide()
+					$(this).siblings().find("li").removeClass()
+				}
+			})
+			var href = $(".nav.nav-list li:first a:last").attr('href');
+			document.getElementById("barframe").src = href;
+		})
+
+		function quit() {
+			$.ajax({
+				url: "/supermarket/back/login/quit",
+				dataType: "json",
+				type: "post",
+				success: function (data) {
+					window.location.href = data;
+				}
+			})
+		}
+	</script>
+
+</body>
+
+</html>

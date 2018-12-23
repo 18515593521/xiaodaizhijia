@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>渠道管理</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="Amee" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<link rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../css/font-awesome.min.css" />
+	<link rel="stylesheet" href="../css/ace.min.css" />
+	<link rel="stylesheet" href="../css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="../css/admin.css" />
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="../css/font-awesome-ie7.min.css"/>
+	<![endif]-->
+	<!--[if lte IE 8]>
+	<link rel="stylesheet" href="../css/ace-ie.min.css"/>
+	<![endif]-->
+	<!--[if lt IE 9]>
+	<script src="../js/html5shiv.js"></script>
+	<script src="../js/respond.min.js"></script>
+	<![endif]-->
+	<script src="../js/ace-extra.min.js"></script>
+</head>
+
+<body class="skin-3 bg-fff scrolling">
+	<div class="breadcrumbs " id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				首页
+			</li>
+			<li>
+				权限
+			</li>
+			<li>
+				渠道管理
+			</li>
+		</ul>
+		
+	</div>
+	<div class="page-content">
+		<div class="col-sm-12">
+                <form action="/supermarket/back/admin/find_admin" class="form-horizontal" role="form" method="post">
+                    <div class="form-group  col-sm-6 col-lg-4 ">
+                        <label class="col-sm-3 control-label no-padding-right"> 渠道标题 </label>
+                        <div class="col-sm-9">
+                            <input id="title" type="text" placeholder="" class="input-large" name="title" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group  col-sm-12 center">
+                      
+						<a href="#modal1" role="button" data-toggle="modal" data-sign="1" class="btn btn-xs btn-primary">
+							新增
+						</a>
+		
+                        <button type="button" class="btn btn-xs btn-success" id="search">
+                           	 搜索
+                            <i class="icon-arrow-right icon-on-right bigger-110"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive">
+					<table id="table" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th>渠道标题</th>
+								<th>创建名称</th>
+								<th>隶属公司</th>
+								<th>对公对私</th>
+								<th>是否在用</th>
+								<th>创建时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+			<i class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+
+	<div id="modal1" class="modal fade">
+		<div class="modal-dialog w80">
+			<div class="modal-content">
+				<div class="modal-header no-padding">
+					<div class="table-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							<span class="white">&times;</span>
+						</button>
+						新增渠道
+					</div>
+				</div>
+				<div class="modal-body no-padding">
+					<div class="row">
+						<div class="col-xs-12 mt-10">
+							<form id="addFrm" class="form-horizontal" role="form" method="post">
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">渠道标题：</label>
+									<div class="col-xs-6">
+										<input type="text" class="col-xs-12" name="cn_title" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">渠道名称：</label>
+									<div class="col-xs-6">
+										<input type="text" class="col-xs-12" name="cn_name" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">隶属公司：</label>
+									<div class="col-xs-6">
+										<input type="text" class="col-xs-12" name="subsidiary" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">对公对私：</label>
+									<div class="col-xs-6">
+										<input type="radio" name="public_private" value="0" checked="checked" />对公
+										<input type="radio" name="public_private" value="1" />对私
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">是否在用：</label>
+									<div class="col-xs-6">
+										<input type="radio" name="state" value="0" checked="checked" />使用
+										<input type="radio" name="state" value="1" />不使用
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="col-sm-offset-4">
+						<button class="btn btn-sm btn-success pull-left " data-dismiss="modal" onclick="add();">
+							确定
+						</button>
+						<button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">取消
+						</button>
+					</div>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+
+
+	<div id="modal2" class="modal fade">
+		<div class="modal-dialog ">
+			<div class="modal-content">
+				<div class="modal-header no-padding">
+					<div class="table-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							<span class="white">&times;</span>
+						</button>
+						修改角色
+					</div>
+				</div>
+				<div class="modal-body no-padding">
+					<div class="row">
+						<div class="col-xs-12 mt-10">
+							<form id="updateFrm" class="form-horizontal" role="form" method="post">
+								<input type="hidden" id="cn_id" name="cn_id" />
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">渠道标题：</label>
+									<div class="col-xs-6">
+										<input type="text" class="col-xs-12" name="cn_title" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">渠道名称：</label>
+									<div class="col-xs-6">
+										<input type="text" class="col-xs-12" name="cn_name" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">隶属公司：</label>
+									<div class="col-xs-6">
+										<input type="text" class="col-xs-12" name="subsidiary" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">对公对私：</label>
+									<div class="col-xs-6">
+										<input type="radio" name="public_private" value="0" />对公
+										<input type="radio" name="public_private" value="1" />对私
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label no-padding-right">是否在用：</label>
+									<div class="col-xs-6">
+										<input type="radio" name="state" value="0" />使用
+										<input type="radio" name="state" value="1" />不使用
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="col-sm-offset-4">
+						<button class="btn btn-sm btn-success pull-left " data-dismiss="" onclick="update();">
+							确定
+						</button>
+						<button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">取消
+						</button>
+					</div>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+	<script src="../js/jquery-2.0.3.min.js"></script>
+	<script src="../js/jquery.dataTables.min.js"></script>
+	<script src="../js/jquery.dataTables.bootstrap.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var oTable1;
+		jQuery(function ($) {
+			//初始化table
+			oTable1 = $('#table')
+				.dataTable({
+					"bPaginate": true, //分页工具条显示
+					//"sPaginationType" : "full_numbers",//分页工具条样式
+					"bStateSave": false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态  
+					"bScrollCollapse": true, //当显示的数据不足以支撑表格的默认的高度
+					"bLengthChange": true, //每页显示的记录数
+					"bFilter": false, //搜索栏
+					"bSort": false, //是否支持排序功能
+					"bInfo": true, //显示表格信息
+					"bAutoWidth": true, //自适应宽度
+					"fnRowCallback": function (nRow, aData, iDisplayIndex) { //解决序号问题
+						jQuery("td:first", nRow).html(iDisplayIndex + 1);
+						return nRow;
+					},
+					"bJQueryUI": true, //是否开启主题
+					"iDisplayStart": 0,
+					"iDisplayLength": 25,
+					"bDestroy": false,
+					"bProcessing": true, //开启读取服务器数据时显示正在加载中……特别是大数据量的时候，开启此功能比较好
+					"bServerSide": true, //服务器处理分页，默认是false，需要服务器处理，必须true
+					"sAjaxDataProp": "aData", //是服务器分页的标志，必须有 
+					"fnServerParams": function (aoData) {
+						aoData.push({
+							"name": "cn_title",
+							"value": $("#title").val()
+						});
+					},
+					"sAjaxSource": "/supermarket/back/channelxin/list", //通过ajax实现分页的url路径。  
+					"aoColumns": [ //初始化要显示的列
+						{
+							"mDataProp": "",
+							"sDefaultContent": ''
+						},
+
+						{
+							"mDataProp": "cn_title",
+							"sDefaultContent": ''
+						},
+						{
+							"mDataProp": "cn_name",
+							"sDefaultContent": ''
+						},
+						{
+							"mDataProp": "subsidiary",
+							"sDefaultContent": ''
+						},
+						{
+							"mDataProp": "public_private",
+							"mRender": function (data, type, full) {
+								//var public_private_1="对公";
+								var public_private_1 = "";
+								if (data == '1') {
+									public_private_1 = "对私";
+								}
+								if (data == '0') {
+									public_private_1 = "对公";
+								}
+								return public_private_1;
+							},
+							"sDefaultContent": ''
+						},
+						{
+							"mDataProp": "state",
+							"mRender": function (data, type, full) {
+								var state_1 = "正在使用";
+								if (data != '0') {
+									state_1 = "停止使用";
+								}
+								return state_1;
+							},
+							"sDefaultContent": ''
+						},
+						{
+							"mDataProp": "create_time",
+							"mRender": function (data, type, full) {
+								return formatDate(new Date(data));
+							},
+							"sDefaultContent": '' //获取列数据，跟服务器返回字段一致
+
+						},
+						{
+							"mDataProp": "",
+							"mRender": function (data, type, full) {
+								return "<a href='#modal2' role='button' class='btn btn-xs btn-primary'" +
+									" data-toggle='modal' onclick=single('" + full.cn_id + "')>修改</a>" +
+									"<a href='#modal' role='button' class='btn btn-xs btn-danger'" +
+									"data-toggle='modal' onclick=delChannel('" + full.cn_id + "')>删除</a>";
+							},
+							"sDefaultContent": '' //获取列数据，跟服务器返回字段一致
+
+						}
+					],
+					"oLanguage": { //语言设置
+						"sProcessing": "处理中...",
+						"sLengthMenu": "显示 _MENU_ 项结果",
+						"sZeroRecords": "没有匹配结果",
+						"sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+						"sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+						"sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+						"sInfoPostFix": "",
+						"sSearch": "搜索:",
+						"sUrl": "",
+						"sEmptyTable": "表中数据为空",
+						"sLoadingRecords": "载入中...",
+						"sInfoThousands": ",",
+						"oPaginate": {
+							"sFirst": "首页",
+							"sPrevious": "上页",
+							"sNext": "下页",
+							"sLast": "末页"
+						},
+						"oAria": {
+							"sSortAscending": ": 以升序排列此列",
+							"sSortDescending": ": 以降序排列此列"
+						}
+					}
+				})
+		})
+		
+		$("#search").click(function () {
+			oTable1.fnDraw();
+		})
+
+		function formatDate(now) {
+			var year = now.getFullYear();
+			var hour = zero(now.getHours());
+			var date = zero(now.getDate());
+			var month = zero(now.getMonth() + 1);
+			var minute = zero(now.getMinutes());
+			var second = zero(now.getSeconds());
+			return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+		}
+
+		function zero(time) {
+			if (time < 10) return "0" + time;
+			return time;
+		}
+
+
+		/* 新增渠道 */
+		function add() {
+
+			var cn_name = $("#addFrm").find("[name='cn_name']").val();
+			var cn_title = $("#addFrm").find("[name='cn_title']").val();
+			var subsidiary = $("#addFrm").find("[name='subsidiary']").val();
+			var public_private = $("#addFrm").find("[name='public_private']:checked").val();
+			var state = $("#addFrm").find("[name='state']:checked").val();
+			if (name != '') {
+				$.ajax({
+					type: "post",
+					url: "/supermarket/back/channelxin/addChannel",
+					data: {
+						"cn_name": cn_name,
+						"cn_title": cn_title,
+						"subsidiary": subsidiary,
+						"public_private": public_private,
+						"state": state
+					},
+					dataType: "json",
+					async: false,
+					success: function (data) {
+
+						if (data.code == 1) {
+							alert("新增成功");
+							oTable1.fnDraw();
+						} else if(data.code==5){
+							window.location.href="/supermarket/back/html/login.html"; 						
+						}else{
+							alert("网络错误");
+						}
+					},
+					error: function (data) {
+						alert("服务器错误");
+					}
+				})
+			} else {
+				alert("渠道名称不能为空");
+			}
+			$("#addFrm").find("[name='cn_name']").val("");
+			$("#addFrm").find("[name='cn_title']").val("");
+			$("#addFrm").find("[name='subsidiary']").val("");
+		}
+
+		/* 查看单个渠道 */
+		function single(cn_id) {
+
+			$.ajax({
+				type: "post",
+				url: "/supermarket/back/channelxin/single",
+				data: {
+					"cn_id": cn_id
+				},
+				dataType: "json",
+				async: false,
+				success: function (data) {
+					if (data.code == 1) {
+						$("#cn_id").val(data.channel.cn_id);
+						$("#updateFrm").find("[name='cn_title']").val(data.channel.cn_title);
+						$("#updateFrm").find("[name='cn_name']").val(data.channel.cn_name);
+						$("#updateFrm").find("[name='subsidiary']").val(data.channel.subsidiary);
+						$("#updateFrm").find("[name='state']").eq(data.channel.state).attr("checked", 'checked');
+						$("#updateFrm").find("[name='public_private']").eq(data.channel.public_private).attr("checked", 'checked');
+					} else {
+						alert("网络错误");
+					}
+				},
+				error: function (data) {
+					alert("服务器错误");
+				}
+			})
+		}
+
+
+		/* 修改单个渠道 */
+		function update() {
+			var cn_id = $("#cn_id").val();
+			var cn_name = $("#updateFrm").find("[name='cn_name']").val();
+			var cn_title = $("#updateFrm").find("[name='cn_title']").val();
+			var subsidiary = $("#updateFrm").find("[name='subsidiary']").val();
+			var public_private = $("#updateFrm").find("[name='public_private']:checked").val();
+			var state = $("#updateFrm").find("[name='state']:checked").val();
+			if (cn_name != '') {
+				$.ajax({
+					type: "post",
+					url: "/supermarket/back/channelxin/update",
+					data: {
+						"cn_id": cn_id,
+						"cn_name": cn_name,
+						"cn_title": cn_title,
+						"subsidiary": subsidiary,
+						"public_private": public_private,
+						"state": state
+					},
+					dataType: "json",
+					async: false,
+					success: function (data) {
+						if (data.code == 1) {
+							/* $("#modal2").attr("aria-hidden",true); */
+							oTable1.fnDraw();
+						} else {
+							alert("网络错误");
+						}
+					},
+					error: function (data) {
+						alert("服务器错误");
+					}
+				})
+			} else {
+				alert("渠道名称不能为空");
+			}
+
+		}
+
+		/* 删除渠道 */
+		function delChannel(cn_id) {
+			if (cn_id != '') {
+				$.ajax({
+					type: "post",
+					url: "/supermarket/back/channelxin/delChannel",
+					data: {
+						"cn_id": cn_id
+					},
+					dataType: "json",
+					async: false,
+					success: function (data) {
+						if (data.code == 1) {
+							alert("删除成功");
+							oTable1.fnDraw();
+						} else {
+							alert("网络错误");
+						}
+					},
+					error: function (data) {
+						alert("服务器错误");
+					}
+				})
+			} else {
+				alert("网络错误");
+			}
+
+		}
+	</script>
+</body>
+
+</html>

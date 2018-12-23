@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WxLogin">
+	<sql id="user_info">
+		user_id,
+		user_phone,
+		user_password,
+		user_name,
+		user_head_picture,
+		device_token,
+		device_model,
+		user_source,
+		open_id,
+		read_count,
+		create_time,
+		remarks
+	</sql>
+	<select id="find_user_userinfos" resultType="map" parameterType="java.lang.String">
+		SELECT <include refid="user_info"></include> from user_userinfos where  open_id=#{openid}
+	</select>
+	<select id="findUserByPhone" parameterType="java.lang.String" resultType="map">
+		SELECT <include refid="user_info"></include> from user_userinfos WHERE user_phone=#{phone}
+	</select>
+	
+	<update id="update_openID" parameterType="map">
+		UPDATE user_userinfos SET user_userinfos.open_id=#{open_id} WHERE user_id=#{user_id}
+	</update>
+	
+</mapper>

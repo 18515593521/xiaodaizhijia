@@ -1,0 +1,385 @@
+.color-fff {
+    color: #fff;
+}
+
+.bg-fff {
+    background-color: #fff;
+}
+
+.mt-3 {
+    margin-top: 3px;
+
+    label {
+        // vertical-align: inherit;
+        margin-right: 3px;
+        margin-bottom: 0;
+    }
+}
+
+.mr-10 {
+    margin-right: 10px;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.navbar {
+    min-height: 60px;
+}
+
+.flex {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.text-shadow {
+    margin-top: 5px;
+    color: #fafafa !important;
+    letter-spacing: 0;
+    text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135 !important
+}
+
+.navbar-header {
+    .logo {
+        border-radius: 50%;
+        box-sizing: border-box;
+
+        img {
+            margin-top: 6px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        p {
+            margin-left: 10px;
+            color: #fff;
+            line-height: 50px;
+            font-size: 20px;
+        }
+    }
+
+    .vertical {
+        height: 20px;
+        width: 2px;
+        background-color: #fff;
+        margin: 18px 20px 0;
+    }
+
+    .out {
+        height: 50px;
+        padding: 15px 10px 25px;
+    }
+}
+
+.scrolling {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.breadcrumbs {
+    border: 0;
+    border-radius: 10px;
+    background-color: #e7f2f8;
+    // margin: 0 8px 0;
+}
+
+.sidebar.fixed,
+.sidebar.sidebar-fixed {
+    position: fixed;
+    z-index: 1029;
+    top: 61px;
+    left: 0
+}
+
+.admin {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    top: 59px;
+    left: 180px;
+    // background-color: #fff !important;
+    background-color: #eee !important;
+    margin-top: 2px;
+    padding: 0px 0 0 10px;
+    border-top: 1px solid #a4c6dd;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    width: calc(100% - 190px);
+    min-height: 500px;
+
+    @media only screen and (max-width: 991px) {
+        width: 100% !important;
+    }
+
+    iframe {
+        border: 0;
+        // width: calc(100% - 190px);
+        width: calc(100% + 15px);
+
+
+
+        z-index: 999999;
+
+        .breadcrumbs {
+            padding: 0 10px;
+            margin: 0 8px 0;
+        }
+
+
+    }
+}
+
+.page-content {
+    background-color: #eee !important;
+
+
+}
+
+.table-header {
+    background-color: #e7f2f8;
+    color: #000;
+}
+
+.table,
+.table thead tr th {
+    text-align: center !important;
+}
+
+.page-content {
+    padding: 8px 10px 24px;
+}
+
+.input-group-addon {
+    padding: 6px 11px;
+}
+
+select {
+    height: 28px;
+    box-sizing: border-box;
+}
+
+.am-form-control-static {
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.am-bold {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 0
+}
+
+.font-weight {
+    font-weight: bold;
+}
+
+.title {
+    padding: 0 0 0 50px;
+}
+
+.modal-footer {
+    padding: 10px 0;
+}
+
+@media only screen and (max-width: 991px) {
+    .sidebar {
+        // display: block;
+        margin-top: 60px;
+    }
+
+    .menu-toggler {
+        top: 25px;
+    }
+
+    .admin {
+        left: 0;
+        top: 115px;
+    }
+}
+
+// 登录
+.signinpanel {
+    background: rgba(255, 255, 255, .2) !important;
+}
+
+.white {
+    color: #fff !important;
+}
+
+.color_888 {
+    color: #888 !important;
+}
+
+.border-ra {
+    border-radius: 10px;
+}
+
+.login-logo {
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.logn-out {
+    /* background-color: #fff; */
+    height: 60px;
+    width: 150px;
+    overflow: hidden;
+}
+
+.logn-out:hover {
+    background-color: #3dacd8;
+    height: auto;
+}
+
+.logn-out .logn-son {
+    display: block;
+    height: 60px;
+    width: 150px;
+}
+
+.logn-out .logn-son:hover {
+    background-color: rgba(255, 255, 255, .5);
+    cursor: pointer;
+}
+
+.logn-out .img span {
+    color: #fff;
+    font-size: 16px;
+}
+
+.logn-out .img {
+    line-height: 60px;
+}
+
+.logn-out .logn-son img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin: 0 10px 5px;
+}
+
+.logn-out .out {
+    line-height: 60px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+}
+
+.footer {
+    margin-top: 20px;
+    height: 40px;
+}
+
+.w100 {
+    width: 100% !important;
+}
+
+.w80 {
+    width: 80% !important;
+}
+
+.index {
+    .bg {
+
+        background: url("../images/image/bg.jpg") !important;
+        width: 100%;
+        min-height: 500px;
+        padding-top: 20px;
+
+        @media only screen and (max-width: 991px) {
+            background: none !important;
+        }
+
+        .total {
+            @extend .flex;
+
+            .col {
+                width: 100%;
+                @extend .flex;
+                flex-wrap: wrap;
+
+                justify-content: center;
+                height: 200px;
+
+                i {
+                    font-size: 50px;
+                    margin-right: 20px;
+                }
+
+                .data {
+                    font-size: 20px;
+                }
+            }
+
+            @media only screen and (max-width: 991px) {
+                flex-wrap: wrap;
+                flex-grow: 1;
+
+                .col {
+                    width: 45%;
+                    height: 100px;
+
+                    i {
+                        font-size: 20px;
+                        margin-right: 20px;
+                    }
+
+                    .data {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+
+        .daynum {
+            .widget-main {
+                min-height: 150px;
+
+                .row {
+                    @extend .flex;
+                    font-size: 16px;
+                    margin: 5px;
+
+                    p {
+                        &:last-child {
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    .chart {
+        min-width: 700px;
+        height: 500px;
+        margin-top: 50px;
+
+        @media only screen and (max-width: 991px) {
+            min-width: 300px !important;
+        }
+    }
+
+}
+
+@media only screen and (max-width: 991px) {
+    .layui-laydate-range {
+        width: 80% !important
+    }
+}

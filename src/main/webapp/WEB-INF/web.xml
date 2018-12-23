@@ -1,0 +1,105 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>Archetype Created Web Application</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:spring.xml
+			<!-- ,classpath:quartz.xml -->
+		</param-value>
+	</context-param>
+
+	 
+	
+	<!-- 编码过滤器 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<!-- <async-supported>true</async-supported> -->
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter>
+        <filter-name>filterServlet</filter-name>
+        <filter-class>com.dd.supermarket.filter.FilterServlet</filter-class>
+    </filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+    <filter-mapping>
+        <filter-name>filterServlet</filter-name>
+        <url-pattern>/back/settlement/save_settlement</url-pattern>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>filterServlet</filter-name>
+        <url-pattern>/back/channelxin/find_channelById</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>filterServlet</filter-name>
+        <url-pattern>/back/pecharge/save_recharge</url-pattern>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>filterServlet</filter-name>
+        <url-pattern>/back/commdity/getCommdityPaes</url-pattern>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>filterServlet</filter-name>
+        <url-pattern>/back/supplier/find_supplier</url-pattern>
+    </filter-mapping>
+    
+    
+    
+    
+    
+	<!-- Spring监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 防止Spring内存溢出监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	
+<!-- 	<servlet>
+		<servlet-name>loadServlet</servlet-name>
+		<servlet-class>com.dd.supermarket.controller.weChat.accessToken.GetAccessTokenServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet> -->
+
+	<!-- Spring MVC servlet -->
+	<servlet>
+		<servlet-name>SpringMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring.xml</param-value>
+		</init-param>
+		<!-- <load-on-startup>1</load-on-startup> <async-supported>true</async-supported> -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SpringMVC</servlet-name>
+		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- <servlet-mapping>
+     <servlet-name>default</servlet-name>
+     <url-pattern>/static/*</url-pattern>
+	</servlet-mapping> -->
+	<session-config>
+		<session-timeout>180</session-timeout>  
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>/index.html</welcome-file>
+	</welcome-file-list>
+
+
+</web-app>

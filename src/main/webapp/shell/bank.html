@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="Author" content="Amee" />
+	<meta name="Keywords" content="开心花" />
+	<meta name="Description" content="低利率，快速高效，下款快" />
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="../lib/iosSelect.css">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="../lib/layer.css">
+	<script src="../js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript">
+		(function (doc, win) {
+			var docEl = doc.documentElement,
+				resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+				recalc = function () {
+					var clientWidth = docEl.clientWidth;
+					if (!clientWidth) return;
+					docEl.style.fontSize = clientWidth / 7.5 + 'px';
+				};
+			if (!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener('DOMContentLoaded', recalc, false);
+		})(document, window);
+	</script>
+	<title>银行卡</title>
+</head>
+
+<body>
+	<div class="info">
+		<ul class="items">
+			<li>
+				<div>卡号</div>
+				<div>
+					<input type="tel" placeholder="请填写..." id="card_no">
+				</div>
+			</li>
+			<li>
+				<div>银行</div>
+				<div>
+					<div class="arrow">
+						<input type="hidden" name="bank_id" id="bankId" value="">
+						<span id="showBank">请选择...</span>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div>手机号</div>
+				<div>
+					<input type="tel" placeholder="请填写..." id="reserve_phone">
+				</div>
+			</li>
+		</ul>
+	</div>
+	<a class="submit" href="javascript:;" id="btn_submit" lang="true">提交</a>
+
+	<script src="../lib/iosSelect.js"></script>
+	<script>
+		var data = [{
+				'id': '10001',
+				'value': '工商银行'
+			},
+			{
+				'id': '10002',
+				'value': '农业银行'
+			},
+			{
+				'id': '10003',
+				'value': '建设银行'
+			},
+			{
+				'id': '10004',
+				'value': '中国银行'
+			},
+			{
+				'id': '10005',
+				'value': '交通银行'
+			},
+			{
+				'id': '10006',
+				'value': '浦发银行'
+			},
+			{
+				'id': '10007',
+				'value': '上海银行'
+			},
+			{
+				'id': '10008',
+				'value': '汇丰银行'
+			},
+
+			{
+				'id': '10009',
+				'value': '光大银行'
+			},
+			{
+				'id': '10010',
+				'value': '招商银行'
+			},
+			{
+				'id': '10011',
+				'value': '中信银行'
+			},
+			{
+				'id': '10012',
+				'value': '民生银行'
+			},
+			{
+				'id': '10013',
+				'value': '平安银行'
+			},
+			{
+				'id': '10014',
+				'value': '华夏银行'
+			},
+			{
+				'id': '10015',
+				'value': '广发银行'
+			},
+			{
+				'id': '10016',
+				'value': '北京银行'
+			}
+		];
+	</script>
+	<script src="../js/jquery-2.0.3.min.js"></script>
+	<script src="../lib/layer.js"></script>
+	<script type="text/javascript">
+		var showBankDom = document.querySelector('#showBank');
+		var bankIdDom = document.querySelector('#bankId');
+		showBankDom.addEventListener('click', function () {
+			var bankId = showBankDom.dataset['id'];
+			var bankName = showBankDom.dataset['value'];
+
+			var bankSelect = new IosSelect(1, [data], {
+				container: '.container',
+				title: '银行卡选择',
+				itemHeight: 50,
+				itemShowCount: 3,
+				oneLevelId: bankId,
+				callback: function (selectOneObj) {
+					bankIdDom.value = selectOneObj.id;
+					showBankDom.innerHTML = selectOneObj.value;
+					showBankDom.dataset['id'] = selectOneObj.id;
+					showBankDom.dataset['value'] = selectOneObj.value;
+				}
+			});
+
+		});
+		$(".submit").click(function () {
+			var card_no = $("#card_no").val();
+			var bankId = $("#bankId").val();
+			var reserve_phone = $("#reserve_phone").val();
+			var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+			 if (card_no == null || card_no === '') {
+				 layer.open({
+						content: "请输入卡号！",
+						skin: 'msg',
+						time: 2 //2秒后自动关闭
+					});
+				
+			} 
+			else if (bankId == null || bankId === '') {
+				 layer.open({
+						content: "请选择银行！",
+						skin: 'msg',
+						time: 2 //2秒后自动关闭
+					});
+				
+			} 
+			else if (reserve_phone === '') {
+				 layer.open({
+						content: "请输入手机号！",
+						skin: 'msg',
+						time: 2 //2秒后自动关闭
+					});
+				
+			} else {
+				layer.open({
+					content: '您的信息已提交，请等待审核',
+					btn: '好的',
+					yes: function (index) {
+						layer.close(index)
+						window.location.href = './loan.html'
+					}
+				});
+			}
+			
+
+		})
+	</script>
+
+
+
+</body>
+
+</html>

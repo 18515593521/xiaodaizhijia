@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backRecharge">
+	<sql id="recharge">
+		commodity_recharge.com_id,
+		commodity_recharge.create_time,
+		commodity_recharge.cr_id,
+		commodity_recharge.cr_money,
+		commodity_recharge.cr_picture,
+		DATE(commodity_recharge.recharge_time) recharge_time,
+		commodity_recharge.sys_sa_id 
+	</sql>
+	
+	<insert id="save_recharge" parameterType="map">
+		INSERT into commodity_recharge(com_id,create_time,cr_id,cr_money,cr_picture,recharge_time,sys_sa_id ) 
+		VALUES(#{com_id},NOW(),#{cr_id},#{cr_money},#{cr_picture},#{recharge_time},#{sys_sa_id})
+	</insert>
+	
+	<!-- 根据id查询充值记录 -->
+	<select id="find_recharge" resultType="map" parameterType="java.lang.String">
+		select <include refid="recharge"></include> from commodity_recharge where com_id=#{com_id}
+	</select>
+	
+	<!-- 查询商品信息 -->
+	<select id="find_com" resultType="map" parameterType="java.lang.String">	
+		SELECT company_informatio.ci_name,commodity.com_name,commodity.com_price,commodity.website_url,commodity.backstage_url,commodity.backstage_admin,commodity.backstage_password,
+			IFNULL((SELECT COUNT(uf_id) from user_footprint where com_id=#{com_id}),0) click_number,IFNULL(apply_number,0) apply_number,
+			(IFNULL((SELECT SUM(cr_money) amount from commodity_recharge where com_id=#{com_id}),0) - IFNULL((SELECT SUM(settlement_price) from commodity_settlement where com_id=#{com_id}),0)) amount
+		from commodity 
+		LEFT JOIN company_informatio ON company_informatio.ci_id = commodity.ci_id
+		LEFT JOIN (SELECT commodity_settlement.com_id,SUM(apply_number) apply_number from commodity_settlement where com_id=#{com_id}) number ON number.com_id = commodity.com_id
+		where commodity.com_id = #{com_id}
+	</select>
+	
+</mapper>

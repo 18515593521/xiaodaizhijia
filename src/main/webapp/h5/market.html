@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="Author" content="Amee" />
+	<meta name="Keywords" content="" />
+	<meta name="Description" content="" />
+	<link rel="stylesheet" href="../css/reset.css">
+	<link rel="stylesheet" href="../lib/swiper.min.css">
+	<link rel="stylesheet" href="./css/market.css">
+	<script type="text/javascript">
+		! function (t) {
+			var e = 750,
+				i = t.document,
+				n = i.documentElement,
+				o = "orientationchange" in t ? "orientationchange" : "resize",
+				a = function t() {
+					var i = n.getBoundingClientRect().width;
+					return n.style.fontSize = 5 * Math.max(Math.min(i / e * 20, 11.2), 8.55) + "px", t
+				}();
+			n.setAttribute("data-dpr", t.navigator.appVersion.match(/iphone/gi) ? t.devicePixelRatio : 1), /iP(hone|od|ad)/.test(
+				t.navigator.userAgent) && (i.documentElement.classList.add("ios"), parseInt(t.navigator.appVersion.match(
+				/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8 && i.documentElement.classList.add("hairline")), i.addEventListener && (t.addEventListener(
+				o, a, !1), i.addEventListener("DOMContentLoaded", a, !1))
+		}(window);
+	</script>
+	<title>超市</title>
+</head>
+
+<body class="market">
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<a href="http://www.jyoudai.com/h5/share.html">
+					 <img src="./images/image/20181106095928.jpg" alt="" width="100%" height="100%"> 
+				</a>
+			</div>
+			<!-- <div class="swiper-slide">
+					<a href="#">
+						<img src="../images/image/happy.jpg" alt="">
+					</a>
+				</div>
+				<div class="swiper-slide">
+					<a href="#">
+						<img src="../images/image/no2.png" alt="">
+					</a>
+				</div> -->
+		</div>
+		<!-- <div class="swiper-pagination"></div> -->
+	</div>
+	<div class="sort flex-row" id="appTitle">
+		<a href="javascript:;" lang="">
+			<img src="./images/img/1.png" alt="">
+			<p>全部平台</p>
+		</a>
+		<a href="javascript:;" lang="e7fca29984af11e89ca300163e06af89">
+			<img src="./images/img/2.png" alt="">
+			<p>下款最快</p>
+		</a>
+		<a href="javascript:;" lang="e803a13d84af11e89ca300163e06af89">
+			<img src="./images/img/3.png" alt="">
+			<p>通过率高</p>
+		</a>
+		<a href="javascript:;" lang="e80c1dce84af11e89ca300163e06af89">
+			<img src="./images/img/4.png" alt="">
+			<p>利息超低</p>
+		</a>
+	</div>
+	<p class="tips">
+		据大数据统计，同时申请4家，下款成功率接近99%。
+	</p>
+	<div class="markets" id="appList">
+		
+	</div>
+	<script src="../lib/swiper.min.js"></script>
+	<script>
+		var mySwiper = new Swiper('.swiper-container', {
+			// autoplay:true,
+			pagination: {      
+				el: '.swiper-pagination',
+			},
+		})
+	</script>
+	<script type="text/javascript" src="../back/js/jquery-2.0.3.min.js"></script>
+	<script src="../wx/js/wechatOpenid.js"></script>
+	<script type="text/javascript">
+		$(function () {
+        	 $.ajax({
+                    url:"/supermarket/h5/home/getHomeDataById",
+                    type:"POST",
+                    dataType:"json",
+	                success:function(data){
+						var row = data.resultMap;
+						var appStr = "";
+						$.each(row, function (index, list) {
+							var st = "star_"+list.com_star;
+							appStr += "<a class='item' href='javascript:;' lang='" + list.com_id + "'><div class='logo'><img src=" + list.com_logo + "></div>" 
+							appStr +="<div class='cont'><div class='tit'><p class='name'>" + list.com_name + "</p><p class='forte'>最快放款"
+							appStr +="<span class='color_money'>" + list.fastest_lending_time + "</span></p></div><p>" + list.term_scope + "</p>" 
+							appStr +="<p>可贷款金额<span class='color_money'>" + list.com_quota + "</span></p><div class='sth'>" 
+							if(list.com_star==5){
+								appStr +="<p class='star'> 成功率：</p>"
+							}else if(list.com_star==4){
+								appStr +="<p class='star star_4'> 成功率：</p>"
+							}else{
+								appStr +="<p class='star star_45'> 成功率：</p>"
+							}
+								
+							appStr +="<p class='number'><span class='color_money'>" + list.applications_number +"</span>人成功申请</p></div></div></a>"
+						});
+						$("#appList").html(appStr);
+						
+						/* var banner = data.bannerList;
+						var ba = "";
+						$.each(banner, function (index, list) {
+							ba+="<a href='"+list.ban_picture+"'></a>"
+						});
+						
+						$(".swiper-slide").html(ba); */
+	                }
+        		}) 
+	        		
+				$("#appList").on("click", "a", function () {
+					var appId = $(this).attr("lang");
+					window.location.href = "details.html?id=" + appId;
+	
+				});
+
+		 });
+				$("#appTitle a").click(function () {
+					
+					var lable_dic_id = $(this).attr("lang");
+					//localStorage.setItem("appTitle",title);
+					window.location.href = "list.html?lable_dic_id=" + lable_dic_id;
+				});
+	</script>
+</body>
+
+</html>

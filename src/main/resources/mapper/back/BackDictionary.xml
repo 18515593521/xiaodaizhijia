@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="backDictionary">
+
+	<sql id="dictionary">
+		dictionaries.dic_id,
+		dictionaries.dic_type,
+		dictionaries.dic_key,
+		dictionaries.dic_value,
+		dictionaries.dic_notes,
+		dictionaries.dic_parentID,
+		dictionaries.create_time,
+		dictionaries.remarks
+	</sql>
+
+	<select id="find_dictionByType" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			<include refid="dictionary"></include>
+		FROM 
+			dictionaries
+		WHERE 
+			dic_type = #{dic_type}
+	</select>
+	
+	<select id="find_dictionByParentID" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			<include refid="dictionary"></include>
+		FROM 
+			dictionaries
+		WHERE 
+			dic_parentID = #{dic_parentID}
+	</select>
+
+	<insert id="save_diction" parameterType="map">
+		INSERT into user_t(
+			dic_id,
+			dic_type,
+			dic_key,
+			dic_value,
+			dic_notes,
+			dic_parentID,
+			create_time,
+			remarks
+		)VALUES(
+			#{dic_id},#{dic_type},#{dic_key},#{dic_value},#{dic_notes},#{dic_parentID},NOW(),#{remarks}
+		)
+	</insert>
+
+	<update id="update_diction" parameterType="map">
+		UPDATE 
+			dictionaries 
+		SET 
+			dic_value = #{dic_value} 
+		WHERE 
+			dic_id = #{dic_id}
+	</update>
+
+	<delete id="del_diction">
+		DELETE FROM 
+			dictionaries 
+		WHERE 
+			dic_id = #{dic_id}
+	</delete>
+</mapper>

@@ -1,0 +1,100 @@
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+$bg-mian:#f0f0f0;
+.bg-mian {
+    background-color: $bg-mian;
+}
+
+.bg_pink {
+    background-color: pink;
+}
+
+.bd-top {
+    border-top: .01rem solid #eee;
+}
+
+.bd-bottom {
+    border-bottom: .01rem solid #999;
+}
+
+.flex-row-between {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-row-start {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.flex-row-around {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.register {
+    .logo {
+        width: 100%;
+        margin: .8rem 0;
+        text-align: center;
+        img {
+            @include size(2.5rem, 2.5rem)
+        }
+    }
+    .input {
+        width: 80%;
+        margin: 0 auto;
+        .row {
+            @extend .bd-bottom;
+            height: 1rem;
+            background: url("../images/img/user.png") no-repeat 0.5rem center/.48rem .52rem;
+            padding-left: 1.2rem;
+            input {
+                height: 96%;
+                background-color: transparent;
+                &.codes {
+                    width: 50%;
+                }
+                &#getting {
+                    width: 40%;
+                }
+            }
+            &.passward {
+                background-image: url("../images/img/passward.png");
+            }
+            &.code {
+                background-image: url("../images/img/code.png");
+            }
+        }
+        .btn {
+            margin: .5rem auto .2rem;
+            width: 80%;
+            height: 1rem;
+            line-height: 1rem;
+            color: #fff;
+            background: url("../images/img/btn.png") 0/cover;
+            text-align: center;
+        }
+        .tip {
+            @extend .flex-row-around;
+            a{
+                color: cornflowerblue;
+            }
+        }
+    }
+}

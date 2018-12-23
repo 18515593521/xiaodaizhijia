@@ -1,0 +1,19 @@
+.share{
+    width: 100%;
+    background: #fdf6d9;
+    img{
+        width: 100%;
+        height: 9.5rem;
+    }
+    .btn{
+        width: 80%;
+        margin: .5rem auto 0;
+        height: 1rem;
+        text-align: center;
+        line-height: 1rem;
+        background: #fdf6d9 url("../image/btn.png") no-repeat 0/100%;
+        color: #fff;
+        font-size: .3rem;
+        
+    }
+}

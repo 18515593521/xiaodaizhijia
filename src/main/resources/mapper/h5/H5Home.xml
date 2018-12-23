@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="H5Home">
+	<sql id="commodityList">
+		IFNULL(commodity.com_id,'') com_id,										<!-- 商品ID（APP名称） -->
+		IFNULL(commodity.com_name,'') com_name,									<!-- 商品名称 -->
+		IFNULL(commodity.fastest_lending_time,'') fastest_lending_time,			<!-- 最快放款时间 -->
+		IFNULL(commodity.com_explain,'') com_explain,							<!-- 产品说明 -->
+		IFNULL(commodity.com_quota,'') com_quota,								<!-- 放款金额 -->
+		IFNULL(commodity.com_star,0) com_star,									<!-- 成功率（星级） -->
+		IFNULL(commodity.loan_amount,'') loan_amount,							<!-- 最高放款额 （以分为单位）-->
+		IFNULL(commodity.term_scope,'') term_scope,								<!-- 还款期限（7-14天） -->
+		IFNULL(commodity.applications_number,'') applications_number,			<!-- 申请成功人数 -->
+		IFNULL(commodity.com_logo,'') com_logo									<!-- 产品logo -->
+	</sql>
+	
+	
+	<!-- 查询首页banner图 -->
+	<select id="find_banner" resultType="map">
+		SELECT 
+			ban_title,
+			ban_content,
+			ban_picture,
+			ban_url
+		FROM 
+			banner
+		WHERE 
+			ban_state = 0
+	</select>
+	
+	
+	<!-- 查询商品列表 -->
+	<select id="find_commodityList" parameterType="map" resultType="map" >
+		SELECT 
+			<include refid="commodityList"></include>
+		FROM
+			commodity
+			where state=0 and isdisplay=0
+			<if test="lable_dic_id != null and lable_dic_id !=''">
+	          and lable_dic_id = #{lable_dic_id}
+	   		</if>
+		ORDER BY com_sort
+	</select>
+	
+	<!-- 添加申请人信息 -->
+	<insert id="save_h5apply" parameterType="map">
+		insert into h5_apply VALUES(#{apply_id},#{com_id},#{user_name},#{user_phone},#{ID_number},NOW())
+	</insert>
+</mapper>

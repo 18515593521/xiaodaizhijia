@@ -1,0 +1,222 @@
+@charset "utf-8";
+/*css reset*/
+header{
+	width: 100%;
+	margin: 0 auto;
+	height: 100px;
+}
+nav{
+	width: 100%;
+	height: 100px;
+	overflow: hidden;
+}
+nav p{
+	font-weight: bold;
+	font-size: 18px;
+}
+.logo{
+	width: 70px;
+	height: 70px;
+	margin-top: 5px;
+	border-radius: 10px;
+}
+nav ul{
+	width: 57%;
+	height: 100px;
+	margin: 0 auto;
+}
+nav a{
+	color: #9a9a9a;
+	font-size: 17px;
+}
+nav ul{
+    text-align: center;
+}
+nav ul li{
+    float: left;
+	width: 20%;
+    line-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+nav ul li p{
+    line-height: 25px;
+}
+
+.top a:hover{
+	color: #ee6c2e;
+}
+.banner-container{
+	width: 100%;
+	height: 490px;
+}
+.warp img{
+	width: 100%;
+	height: 490px;
+}
+.warp{
+	position: relative;
+	overflow: hidden;
+	height: 490px;
+}
+.warp ol{
+    position: absolute;
+    right: 48%;
+    bottom: 10px;
+    width: 50px;
+}
+.warp ol li{
+    float: left;
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #abc;
+}
+.warp ol li.current{
+    background-color: #f10;
+}
+.app_process{
+	height: 350px;
+	font-size: 21px;
+	text-align: center;
+}
+.app_process ul{
+	width: 670px;
+	margin: 0 auto;
+}
+.app_process ul li{
+	float: left;
+	margin-right: 60px;
+}
+.app_process ul li img:hover{
+	transition: All 0.4s ease-in-out;
+            -webkit-transition: All 0.4s ease-in-out;
+            -moz-transition: All 0.4s ease-in-out;
+            -o-transition: All 0.4s ease-in-out;
+
+	transform:rotate(360deg);
+-ms-transform:rotate(360deg); 	/* IE 9 */
+-moz-transform:rotate(360deg); 	/* Firefox */
+-webkit-transform:rotate(360deg); /* Safari 和 Chrome */
+-o-transform:rotate(360deg);
+}
+.app_process h3,.app_condition h3,.app_download h3,.com_position h3{
+	font-size: 30px;
+	margin:40px 0 20px 0;
+	text-align: center;
+	font-weight: 300;
+}
+.spanb{
+	display: block;
+	margin: 0 auto;
+	width: 60px;
+	height: 4px;
+	background-color: #e04b02;
+	margin-bottom: 25px;
+}
+.con{
+	background-color: #a86f56;
+}
+.app_condition{
+	height: 346px;
+	font-size: 21px;
+	text-align: center;
+	border-bottom: 2px solid #CCCCCC;
+	border-top:2px solid #CCCCCC
+}
+.app_condition ul{
+	width: 925px;
+	margin: 0 auto;
+}
+.app_condition ul li{
+	float: left;
+	margin-right: 50px;
+
+}
+
+.app_download{
+	height: 525px;
+	text-align: center;
+}
+.app_download img{
+	width: 200px;
+	height: 200px;
+}
+.app_download ul{
+	width: 560px;
+	margin: 0 auto;
+
+}
+.app_download p{
+	font-size: 17px;
+}
+.app_download h2{
+	font-weight: 500;
+	font-size: 34px;
+}
+.app_download ul li{
+	float: left;
+	margin-right: 150px;
+	color: #a76d54;
+}
+.com_position{
+	width: 100%;
+	height: 755px;
+	border-top:2px solid #CCCCCC
+
+}
+.com_position img{
+	width: 100%;
+}
+.map{
+	width: 91.5%;
+	height: 535px;
+	margin: 0 auto;
+	border:1px solid #dddddd;
+	box-shadow:2px 2px 10px 1px #cccccc
+}
+footer{
+	height: 270px;
+	color: #fff;
+	background-color: #d3881e;
+	text-align: center;
+	overflow: hidden;
+}
+.bo_logo{
+	width: 65px;
+	height: 65px;
+	margin: 0 auto;
+	margin-top: 30px;
+	border-radius: 12px;
+	border:3px solid #fff;
+}
+.bo_logo img{
+	width: 65px;
+	height: 65px;
+	border-radius: 10px;
+
+}
+footer h2{
+	margin-top: 10px;
+}
+footer ul li{
+	float: left;
+}
+footer img{
+	width: 115px;
+	height: 45px;
+}
+footer p{
+	margin-top: 7px;
+	font-size: 17px;
+}
+#dituContent{
+	margin: 15px;
+}
+.iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+.iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
